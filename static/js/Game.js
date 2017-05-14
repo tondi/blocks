@@ -34,10 +34,17 @@ function Game() {
   this.addBlock = function addBlock(x = 0, y = 0, z = 0) {
     var klocek = (new Klocek()).getKlocek();
     main.scene.add(klocek)
-    klocek.position.set(x, y, z)
+    klocek.position.set(x * 50, y * 30, z * 50)
+    klocek.name = `block_${x}_${z}`
+
     this.currentBlock = klocek;
     this.currentBlock.userData.countAddedX = 1;
     this.currentBlock.userData.countAddedZ = 1;
+    // this.currentBlock.userData.countAddedY = 1;
+    // if (y > 0) {
+    //   //   this.currentBlock.userData.countAddedY++;
+
+    // }
 
 
     // console.log(this.currentBlock)

@@ -58,7 +58,7 @@ function Main() {
     // kiedy chcemy kliknąć w obiekt, który ma elementy podrzędne, w raycasterze ustawiamy:
     var intersects = raycaster.intersectObjects(scene.children, true);
 
-    console.log(intersects.length)
+    // console.log(intersects[0].object)
 
     // jeśli długość tablicy > 0 oznacza to że "trafiliśmy" w obiekt 3D czyli "kliknęliśmy" go
 
@@ -69,12 +69,21 @@ function Main() {
 
       // changed to parent
       var name = intersects[0].object.parent.name;
-      console.log(name);
 
-      var x = name.split("_")[1];
-      var z = name.split("_")[2];
-      console.log(x, z)
-      game.addBlock(x * 50, 0, z * 50)
+      var arr = name.split("_")
+      var obj = arr[0];
+      console.log(obj);
+      var x = arr[1];
+      var z = arr[2];
+      if (obj == "plane") {
+        game.addBlock(x, 0, z)
+      }
+      // TODO Figure out how to stack blocks
+      // 1. In original lego there are no 2 level height blopcks, so I want it too
+      if (obj == "block") {
+        game.addBlock(x, 1, z)
+        intersects[0].object.parent.countAddedY++;
+      }
 
     }
 
