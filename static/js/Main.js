@@ -19,10 +19,10 @@ function Main() {
     10000 // maxymalna renderowana odległość
   );
 
-  camera.position.set(-200, 150, -200)
+  camera.position.set(-300, 250, -300)
 
   camera.rotation.x = -Math.PI / 2;
-  camera.lookAt(scene.position);
+  camera.lookAt(new THREE.Vector3(350, 0, 350));
   // console.log(scene.position)
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -113,12 +113,20 @@ function Main() {
   // }
 
   // game.moveCamera();
-
+  var initialCameraPos = true;
 
   (function animateScene() {
 
-    // TODO Repair camera
-    // console.log(game)
+
+    if (initialCameraPos) {
+
+      camera.position.x = Math.cos(Math.PI / 180 * keyboard.arrow.angle) * 1000 + 350
+      camera.position.z = Math.sin(Math.PI / 180 * keyboard.arrow.angle) * 1000 + 350
+      camera.lookAt(new THREE.Vector3(350, 0, 350))
+
+      initialCameraPos = false;
+
+    }
     if (keyboard.arrow.up) {
       camera.position.y += 5;
       camera.lookAt(game.center)

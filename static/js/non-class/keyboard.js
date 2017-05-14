@@ -3,7 +3,7 @@
 
 var keyboard = {}
 keyboard.arrow = {};
-keyboard.arrow.angle = 0;
+keyboard.arrow.angle = -90;
 
 function add(evt) {
   switch (evt.which) {
