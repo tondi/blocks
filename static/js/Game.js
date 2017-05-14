@@ -36,27 +36,67 @@ function Game() {
     main.scene.add(klocek)
     klocek.position.set(x, y, z)
     this.currentBlock = klocek;
+    this.currentBlock.userData.countAddedX = 1;
+    this.currentBlock.userData.countAddedZ = 1;
+
 
     // console.log(this.currentBlock)
   }
 
   this.changeBlockColor = function(color) {
-    console.log(this.currentBlock.children[1].material)
-    this.currentBlock.children[0].material.color.setHex(color);
-    this.currentBlock.children[1].material.color.setHex(color);
+    // console.log(this.currentBlock.children)
+    this.currentBlock.children.forEach(function(el) {
+      //   console.log(el)
+      if (el.children.length) {
+        el.children.forEach(function(inEl) {
+          //   console.log("inel: ", inEl);
+          inEl.material.color.setHex(color);
+        })
+      } else {
+        el.material.color.setHex(color);
+      }
+    })
+
+
 
   }
 
+  // Every new subblock adds to block object3d container 
   this.changeBlockSize = function(direction) {
     console.log(this.currentBlock)
-    var additionalBlock = (new Klocek).getKlocek();
-    this.currentBlock.add(additionalBlock)
 
     if (direction == "x") {
-      additionalBlock.position.set(50, 0, 0)
+      for (let i = 0; i < this.currentBlock.userData.countAddedZ; i++) {
+        // var additionalBlocks = [];
 
+        let additionalOne = (new Klocek).getKlocek()
+          // additionalBlocks.push();
+        additionalOne.position.set(this.currentBlock.userData.countAddedX * 50, 0, i * 50)
+        this.currentBlock.add(additionalOne)
+
+      }
+      //   additionalBlock.position.set(this.currentBlock.userData.countAddedX * 50, 0, 0)
+      this.currentBlock.userData.countAddedX++;
+    }
+    if (direction == "z") {
+      for (let i = 0; i < this.currentBlock.userData.countAddedX; i++) {
+        // var additionalBlocks = [];
+
+        let additionalOne = (new Klocek).getKlocek()
+          // additionalBlocks.push();
+        additionalOne.position.set(i * 50, 0, this.currentBlock.userData.countAddedZ * 50)
+        this.currentBlock.add(additionalOne)
+
+      }
+      //   additionalBlock.position.set(this.currentBlock.userData.countAddedX * 50, 0, 0)
+      this.currentBlock.userData.countAddedZ++;
     }
     // this.currentBlock.children[0].material.color.setHex(color);
+    // console.log(main.scene.children)
+  }
+
+  this.changeBlockRotation = function(rad) {
+    this.currentBlock.rotateY(rad)
 
   }
 

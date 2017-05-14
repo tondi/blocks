@@ -69,15 +69,34 @@ function remove(evt) {
 document.addEventListener("keyup", remove)
 
 // used by shift
-function additionalClick(e) {
-  //   console.log("shift +", e.key)
+function afterShiftClick(e) {
+  console.log("shift +", e.key)
   switch (e.key) {
     case "ArrowLeft":
       {
-
-        console.log("shift +", e.key)
-        // console.log(add)
         game.changeBlockSize("x")
+        break;
+      }
+    case "ArrowUp":
+      {
+        game.changeBlockSize("z")
+        break;
+      }
+  }
+}
+
+function afterCtrlClick(e) {
+  switch (e.key) {
+    case "ArrowLeft":
+      {
+        game.changeBlockRotation(Math.PI / 2)
+        // console.log("leftctrl")
+
+        break;
+      }
+    case "ArrowRight":
+      {
+        game.changeBlockRotation(-Math.PI / 2)
         break;
       }
   }
@@ -105,9 +124,15 @@ document.addEventListener("keydown", e => {
       }
     case "Shift":
       {
-        document.addEventListener("keydown", additionalClick)
+        document.addEventListener("keydown", afterShiftClick)
         document.removeEventListener("keydown", add)
 
+        break;
+      }
+    case "Control":
+      {
+        document.addEventListener("keydown", afterCtrlClick)
+        document.removeEventListener("keydown", add)
         break;
       }
   }
@@ -118,10 +143,17 @@ document.addEventListener("keyup", e => {
     // Handle sihift to change block size
     case "Shift":
       {
-        document.removeEventListener("keydown", additionalClick)
+        document.removeEventListener("keydown", afterShiftClick)
         document.addEventListener("keydown", add)
 
+        break;
       }
-      break;
+    case "Control":
+      {
+        document.removeEventListener("keydown", afterCtrlClick)
+        document.addEventListener("keydown", add)
+
+        break;
+      }
   }
 })
