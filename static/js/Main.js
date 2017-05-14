@@ -124,14 +124,15 @@ function Main() {
       if (game.arrow.left) {
         // camera.position.x += 5;
         game.arrow.angle += 2;
-        camera.position.x = Math.cos(Math.PI / 180 * game.arrow.angle) * 1024
-        camera.position.z = Math.sin(Math.PI / 180 * game.arrow.angle) * 1024
+        // 350 is the center of a board both in x and z
+        camera.position.x = Math.cos(Math.PI / 180 * game.arrow.angle) * 1000 + 350
+        camera.position.z = Math.sin(Math.PI / 180 * game.arrow.angle) * 1000 + 350
         camera.lookAt(game.center)
 
       } else if (game.arrow.right) {
         game.arrow.angle -= 2;
-        camera.position.x = Math.cos(Math.PI / 180 * game.arrow.angle) * 512
-        camera.position.z = Math.sin(Math.PI / 180 * game.arrow.angle) * 512
+        camera.position.x = Math.cos(Math.PI / 180 * game.arrow.angle) * 1000 + 350
+        camera.position.z = Math.sin(Math.PI / 180 * game.arrow.angle) * 1000 + 350
         camera.lookAt(game.center)
           // console.log(game.arrow.angle)
       }
