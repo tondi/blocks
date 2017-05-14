@@ -109,33 +109,31 @@ function Main() {
   (function animateScene() {
 
     // TODO Repair camera
-    if (game) {
-      // console.log(game)
-      if (game.arrow.up) {
-        camera.position.y += 5;
-        camera.lookAt(game.center)
+    // console.log(game)
+    if (keyboard.arrow.up) {
+      camera.position.y += 5;
+      camera.lookAt(game.center)
 
-      } else if (game.arrow.down) {
-        camera.position.y -= 5;
-        camera.lookAt(game.center)
+    } else if (keyboard.arrow.down) {
+      camera.position.y -= 5;
+      camera.lookAt(game.center)
 
-      }
-      // TODO set center of camera rotation ?? Now it rotates over 0
-      if (game.arrow.left) {
-        // camera.position.x += 5;
-        game.arrow.angle += 2;
-        // 350 is the center of a board both in x and z
-        camera.position.x = Math.cos(Math.PI / 180 * game.arrow.angle) * 1000 + 350
-        camera.position.z = Math.sin(Math.PI / 180 * game.arrow.angle) * 1000 + 350
-        camera.lookAt(game.center)
+    }
+    // TODO set center of camera rotation ?? Now it rotates over 0
+    if (keyboard.arrow.left) {
+      // camera.position.x += 5;
+      keyboard.arrow.angle += 2;
+      // 350 is the center of a board both in x and z
+      camera.position.x = Math.cos(Math.PI / 180 * keyboard.arrow.angle) * 1000 + 350
+      camera.position.z = Math.sin(Math.PI / 180 * keyboard.arrow.angle) * 1000 + 350
+      camera.lookAt(game.center)
 
-      } else if (game.arrow.right) {
-        game.arrow.angle -= 2;
-        camera.position.x = Math.cos(Math.PI / 180 * game.arrow.angle) * 1000 + 350
-        camera.position.z = Math.sin(Math.PI / 180 * game.arrow.angle) * 1000 + 350
-        camera.lookAt(game.center)
-          // console.log(game.arrow.angle)
-      }
+    } else if (keyboard.arrow.right) {
+      keyboard.arrow.angle -= 2;
+      camera.position.x = Math.cos(Math.PI / 180 * keyboard.arrow.angle) * 1000 + 350
+      camera.position.z = Math.sin(Math.PI / 180 * keyboard.arrow.angle) * 1000 + 350
+      camera.lookAt(game.center)
+        // console.log(game.arrow.angle)
     }
 
 

@@ -1,31 +1,35 @@
 // keyboard events
 // 1,2,3 - color
 
+var keyboard = {}
+keyboard.arrow = {};
+keyboard.arrow.angle = 0;
+
 function add(evt) {
   switch (evt.which) {
     case 37:
       { // left
         //   console.log("left")
         //moveLights(selectedLight, "left");
-        game.arrow.left = 1;
+        keyboard.arrow.left = 1;
 
         break;
       }
 
     case 38:
       { // up
-        game.arrow.up = 1;
+        keyboard.arrow.up = 1;
         break;
       }
     case 39:
       { // right
         //moveLights(selectedLight, "right")
-        game.arrow.right = 1;
+        keyboard.arrow.right = 1;
         break;
       }
     case 40:
       { // down
-        game.arrow.down = 1;
+        keyboard.arrow.down = 1;
         break;
       }
     default:
@@ -39,22 +43,22 @@ function remove(evt) {
   switch (evt.which) {
     case 37:
       { // left
-        game.arrow.left = 0;
+        keyboard.arrow.left = 0;
         break;
       }
     case 38:
       { // up
-        game.arrow.up = 0;
+        keyboard.arrow.up = 0;
         break;
       }
     case 39:
       { // right
-        game.arrow.right = 0;
+        keyboard.arrow.right = 0;
         break;
       }
     case 40:
       { // down
-        game.arrow.down = 0;
+        keyboard.arrow.down = 0;
         break;
       }
     default:
@@ -64,6 +68,7 @@ function remove(evt) {
 
 document.addEventListener("keyup", remove)
 
+// used by shift
 function additionalClick(e) {
   //   console.log("shift +", e.key)
   switch (e.key) {
@@ -72,6 +77,7 @@ function additionalClick(e) {
 
         console.log("shift +", e.key)
         // console.log(add)
+        game.changeBlockSize("x")
         break;
       }
   }

@@ -42,24 +42,27 @@ function Game() {
 
   this.changeBlockColor = function(color) {
     console.log(this.currentBlock.children[1].material)
-      // console.log(...color.reverse())
     this.currentBlock.children[0].material.color.setHex(color);
     this.currentBlock.children[1].material.color.setHex(color);
+
+  }
+
+  this.changeBlockSize = function(direction) {
+    console.log(this.currentBlock)
+    var additionalBlock = (new Klocek).getKlocek();
+    this.currentBlock.add(additionalBlock)
+
+    if (direction == "x") {
+      additionalBlock.position.set(50, 0, 0)
+
+    }
+    // this.currentBlock.children[0].material.color.setHex(color);
 
   }
 
 
   //   console.log(main.scene.children)
   //   console.log(main.scene.children)
-
-
-
-
-
-
-
-  this.arrow = {};
-  this.arrow.angle = 0;
 
 
 }
