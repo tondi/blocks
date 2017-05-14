@@ -8,7 +8,8 @@ function Game() {
 
   var klocek = (new Klocek()).getKlocek();
   main.scene.add(klocek)
-    //   console.log(main.scene.children)
+
+  //   console.log(main.scene.children)
   console.log(main.scene.children)
 
 

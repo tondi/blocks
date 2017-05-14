@@ -22,7 +22,7 @@ function Klocek() {
     //   var rand15 = rand(1, 5)
     var geometry = new THREE.BoxGeometry(50, 30, 50);
 
-    var cube = new THREE.Mesh(geometry, material)
+    var cube = new THREE.Mesh(geometry /*, material*/ )
     cube.position.set(0, 15, 0)
 
     //   //new THREE.Mesh(geometry, material.clone())
@@ -41,43 +41,56 @@ function Klocek() {
       color: 0x2233aa,
     });
 
-    var cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial)
+    var cylinder = new THREE.Mesh(cylinderGeometry /*, cylinderMaterial */ )
 
+
+    // TODO Test performance
+    var singleGeometry = new THREE.Geometry();
+
+    // cylinder.updateMatrix(); // bez tego pozycja geometrii jest zawsze 0,0,0
+    // singleGeometry.merge(cylinder.geometry, cylinder.matrix);
+
+    cube.updateMatrix();
+    singleGeometry.merge(cube.geometry, cube.matrix);
+
+
+    // pin clones
     var cylinderClone0 = cylinder.clone();
     cylinderClone0.position.set(-12.5, 32.5, -12.5)
-    container.add(cylinderClone0)
+    cylinderClone0.updateMatrix(); // bez tego pozycja geometrii jest zawsze 0,0,0
+    singleGeometry.merge(cylinderClone0.geometry, cylinderClone0.matrix);
+
 
     var cylinderClone1 = cylinder.clone();
     cylinderClone1.position.set(12.5, 32.5, -12.5)
-    container.add(cylinderClone1)
+    cylinderClone1.updateMatrix(); // bez tego pozycja geometrii jest zawsze 0,0,0
+    singleGeometry.merge(cylinderClone1.geometry, cylinderClone1.matrix);
+
 
     var cylinderClone2 = cylinder.clone();
     cylinderClone2.position.set(12.5, 32.5, 12.5)
-    container.add(cylinderClone2)
+    cylinderClone2.updateMatrix(); // bez tego pozycja geometrii jest zawsze 0,0,0
+    singleGeometry.merge(cylinderClone2.geometry, cylinderClone2.matrix);
+
 
     var cylinderClone3 = cylinder.clone();
     cylinderClone3.position.set(-12.5, 32.5, 12.5)
-    container.add(cylinderClone3)
-
-
-    var singleGeometry = new THREE.Geometry();
-
-    meshA.updateMatrix(); // bez tego pozycja geometrii jest zawsze 0,0,0
-    singleGeometry.merge(meshA.geometry, meshA.matrix);
-
-    meshB.updateMatrix();
-    singleGeometry.merge(meshB.geometry, meshB.matrix);
-
-    var singleMesh = new THREE.Mesh(singleGeometry, anyMaterial);
+    cylinderClone3.updateMatrix(); // bez tego pozycja geometrii jest zawsze 0,0,0
+    singleGeometry.merge(cylinderClone3.geometry, cylinderClone3.matrix);
 
 
     // Just a HELPER
-    var edges = new THREE.EdgesHelper(cube, 0x0000ff);
+    var edges = new THREE.EdgesHelper(cube, 0xffffff);
     edges.material.linewidth = 2;
     edges.position.set(0, 15, 0)
     container.add(edges);
 
-    container.add(cube)
+
+
+    var singleMesh = new THREE.Mesh(singleGeometry, cylinderMaterial);
+
+
+    container.add(singleMesh)
       // container.add(cylinder)
 
   }
