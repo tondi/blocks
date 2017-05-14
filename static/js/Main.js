@@ -87,11 +87,41 @@ function Main() {
     // console.log(scene.children)
   }
 
-
+  // game.moveCamera();
 
 
   (function animateScene() {
-    ////// Początek stats
+
+    // TODO Repair camera
+    if (game) {
+      // console.log(game)
+      if (game.arrow.up) {
+        camera.position.y += 5;
+        camera.lookAt(new THREE.Vector3(375, 0, 375))
+
+      } else if (game.arrow.down) {
+        camera.position.y -= 5;
+        camera.lookAt(new THREE.Vector3(375, 0, 375))
+
+      }
+      // TODO set center of camera rotation ?? Now it rotates over 0
+      if (game.arrow.left) {
+        // camera.position.x += 5;
+        game.arrow.angle += 2;
+        camera.position.x = Math.cos(Math.PI / 180 * game.arrow.angle) * 2048
+        camera.position.z = Math.sin(Math.PI / 180 * game.arrow.angle) * 2048
+        camera.lookAt(new THREE.Vector3(375, 0, 375))
+
+      } else if (game.arrow.right) {
+        game.arrow.angle -= 2;
+        camera.position.x = Math.cos(Math.PI / 180 * game.arrow.angle) * 2048
+        camera.position.z = Math.sin(Math.PI / 180 * game.arrow.angle) * 2048
+        camera.lookAt(new THREE.Vector3(375, 0, 375))
+          // console.log(game.arrow.angle)
+      }
+    }
+
+
     renderer.render(scene, camera);
     //mesh.scale.set(1, 1, 1);
 
