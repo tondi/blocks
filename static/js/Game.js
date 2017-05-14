@@ -1,6 +1,7 @@
 function Game() {
 
-  //   console.log(main)
+  this.center = new THREE.Vector3(375, 0, 375)
+    //   console.log(main)
   var el = (new ElementSiatki()).getElementSiatki();
   main.scene.add(el)
 

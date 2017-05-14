@@ -2,25 +2,24 @@ function Main() {
 
 
   var scene, camera, renderer;
-
   scene = new THREE.Scene();
 
-  camera = new THREE.OrthographicCamera(
-    window.innerWidth / -2,
-    window.innerWidth / 2,
-    window.innerHeight / 2,
-    window.innerHeight / -2,
-    0, // minimalny zasięg musi być >= 0
-    10000);
+  // camera = new THREE.OrthographicCamera(
+  //   window.innerWidth / -2,
+  //   window.innerWidth / 2,
+  //   window.innerHeight / 2,
+  //   window.innerHeight / -2,
+  //   0, // minimalny zasięg musi być >= 0
+  //   10000);
 
-  // camera = new THREE.PerspectiveCamera(
-  //         60, // kąt patrzenia kamery (FOV - field of view)
-  //         window.innerWidth / window.innerHeight, // proporcje widoku, powinny odpowiadać proporjom naszego ekranu przeglądarki
-  //         0.1, // minimalna renderowana odległość
-  //         10000 // maxymalna renderowana odległość
-  //     );
+  camera = new THREE.PerspectiveCamera(
+    60, // kąt patrzenia kamery (FOV - field of view)
+    window.innerWidth / window.innerHeight, // proporcje widoku, powinny odpowiadać proporjom naszego ekranu przeglądarki
+    0.1, // minimalna renderowana odległość
+    10000 // maxymalna renderowana odległość
+  );
 
-  camera.position.set(20, 50, -100)
+  camera.position.set(-200, 150, -200)
 
   camera.rotation.x = -Math.PI / 2;
   camera.lookAt(scene.position);
@@ -70,7 +69,7 @@ function Main() {
 
   // LINIE POMOCNICZE
   var axis = new THREE.AxisHelper(2000); // 200 - wielkość
-  //   scene.add(axis);
+  scene.add(axis);
 
   function initObjects() {
     material = new THREE.MeshBasicMaterial({
@@ -97,11 +96,11 @@ function Main() {
       // console.log(game)
       if (game.arrow.up) {
         camera.position.y += 5;
-        camera.lookAt(new THREE.Vector3(375, 0, 375))
+        camera.lookAt(game.center)
 
       } else if (game.arrow.down) {
         camera.position.y -= 5;
-        camera.lookAt(new THREE.Vector3(375, 0, 375))
+        camera.lookAt(game.center)
 
       }
       // TODO set center of camera rotation ?? Now it rotates over 0
@@ -110,13 +109,13 @@ function Main() {
         game.arrow.angle += 2;
         camera.position.x = Math.cos(Math.PI / 180 * game.arrow.angle) * 2048
         camera.position.z = Math.sin(Math.PI / 180 * game.arrow.angle) * 2048
-        camera.lookAt(new THREE.Vector3(375, 0, 375))
+        camera.lookAt(game.center)
 
       } else if (game.arrow.right) {
         game.arrow.angle -= 2;
         camera.position.x = Math.cos(Math.PI / 180 * game.arrow.angle) * 2048
         camera.position.z = Math.sin(Math.PI / 180 * game.arrow.angle) * 2048
-        camera.lookAt(new THREE.Vector3(375, 0, 375))
+        camera.lookAt(game.center)
           // console.log(game.arrow.angle)
       }
     }

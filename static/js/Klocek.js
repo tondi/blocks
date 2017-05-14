@@ -17,18 +17,6 @@ function Klocek() {
       //   depthWrite: false
       //   blending: THREE.AdditiveBlending // kluczowy element zapewniający mieszanie kolorów poszczególnych cząsteczek
     });
-
-    // material = new THREE.SpriteMaterial({
-    //   // size: 30, // wielkość cząsteczki
-    //   color: 0xff3300,
-    //   // map: THREE.ImageUtils.loadTexture("mats/fire.png"),
-    //   transparent: true,
-    //   opacity: 1,
-    //   depthWrite: false,
-    //   blending: THREE.AdditiveBlending
-    // });
-
-
     // for (let i = 0; i < 200; i++) {
     //   // console.log(rand(1,5))
     //   var rand15 = rand(1, 5)
@@ -48,16 +36,49 @@ function Klocek() {
 
     // light = new THREE.PointLight(0xff6600, 1, 500, 2);
 
-    var cylinderGeometry = new THREE.CylinderGeometry(5, 5, 20, 32);
+    var cylinderGeometry = new THREE.CylinderGeometry(7.5, 7.5, 5, 32);
     var cylinderMaterial = new THREE.MeshBasicMaterial({
-      color: 0xff9900,
+      color: 0x2233aa,
     });
 
     var cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial)
-    cylinder.position.set(0, 50, 0)
+
+    var cylinderClone0 = cylinder.clone();
+    cylinderClone0.position.set(-12.5, 32.5, -12.5)
+    container.add(cylinderClone0)
+
+    var cylinderClone1 = cylinder.clone();
+    cylinderClone1.position.set(12.5, 32.5, -12.5)
+    container.add(cylinderClone1)
+
+    var cylinderClone2 = cylinder.clone();
+    cylinderClone2.position.set(12.5, 32.5, 12.5)
+    container.add(cylinderClone2)
+
+    var cylinderClone3 = cylinder.clone();
+    cylinderClone3.position.set(-12.5, 32.5, 12.5)
+    container.add(cylinderClone3)
+
+
+    var singleGeometry = new THREE.Geometry();
+
+    meshA.updateMatrix(); // bez tego pozycja geometrii jest zawsze 0,0,0
+    singleGeometry.merge(meshA.geometry, meshA.matrix);
+
+    meshB.updateMatrix();
+    singleGeometry.merge(meshB.geometry, meshB.matrix);
+
+    var singleMesh = new THREE.Mesh(singleGeometry, anyMaterial);
+
+
+    // Just a HELPER
+    var edges = new THREE.EdgesHelper(cube, 0x0000ff);
+    edges.material.linewidth = 2;
+    edges.position.set(0, 15, 0)
+    container.add(edges);
 
     container.add(cube)
-    container.add(cylinder)
+      // container.add(cylinder)
 
   }
 
