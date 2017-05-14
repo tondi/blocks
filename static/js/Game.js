@@ -3,6 +3,7 @@ function Game() {
   this.currentBlock = null;
 
   function initBoard() {
+
     var el = (new ElementSiatki()).getElementSiatki();
     // main.scene.add(el)
     // console.log(el)

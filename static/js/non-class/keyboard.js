@@ -1,5 +1,5 @@
 // keyboard events
-// 1,2,3 - color
+// 1,2,3,4- color
 
 var keyboard = {}
 keyboard.arrow = {};
@@ -120,6 +120,12 @@ document.addEventListener("keydown", e => {
       {
         // console.log(game.changeBlockColor)
         game.changeBlockColor(0x990000)
+        break;
+      }
+    case "4":
+      {
+        // console.log(game.changeBlockColor)
+        game.changeBlockColor(0x999999)
         break;
       }
     case "Shift":
