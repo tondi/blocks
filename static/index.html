@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="js/Main.js"></script>
+    <script src="js/Game.js"></script>
+    <script src="js/ElementSiatki.js"></script>
+    <script src="js/Klocek.js"></script>
+    <script src="libs/three.js"></script>
+
+    <script>
+        var main;
+        var game;
+        window.addEventListener("load", function() {
+            main = new Main();
+            // elementSiatki = new ElementSiatki();
+            game = new Game();
+        })
+    </script>
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+    <!--<style type="text/css" href="style.css"></style>-->
+</head>
+
+<body>
+    <div id="main"></div>
+
+</body>
+
+</html>
