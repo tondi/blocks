@@ -4,20 +4,20 @@ function Main() {
   var scene, camera, renderer;
   scene = new THREE.Scene();
 
-  camera = new THREE.OrthographicCamera(
-    window.innerWidth / -2,
-    window.innerWidth / 2,
-    window.innerHeight / 2,
-    window.innerHeight / -2,
-    0, // minimalny zasięg musi być >= 0
-    10000);
+  // camera = new THREE.OrthographicCamera(
+  //   window.innerWidth / -2,
+  //   window.innerWidth / 2,
+  //   window.innerHeight / 2,
+  //   window.innerHeight / -2,
+  //   0, // minimalny zasięg musi być >= 0
+  //   10000);
 
-  // camera = new THREE.PerspectiveCamera(
-  //   60, // kąt patrzenia kamery (FOV - field of view)
-  //   window.innerWidth / window.innerHeight, // proporcje widoku, powinny odpowiadać proporjom naszego ekranu przeglądarki
-  //   0.1, // minimalna renderowana odległość
-  //   10000 // maxymalna renderowana odległość
-  // );
+  camera = new THREE.PerspectiveCamera(
+    60, // kąt patrzenia kamery (FOV - field of view)
+    window.innerWidth / window.innerHeight, // proporcje widoku, powinny odpowiadać proporjom naszego ekranu przeglądarki
+    0.1, // minimalna renderowana odległość
+    10000 // maxymalna renderowana odległość
+  );
 
   camera.position.set(-200, 150, -200)
 
@@ -124,14 +124,14 @@ function Main() {
       if (game.arrow.left) {
         // camera.position.x += 5;
         game.arrow.angle += 2;
-        camera.position.x = Math.cos(Math.PI / 180 * game.arrow.angle) * 2048
-        camera.position.z = Math.sin(Math.PI / 180 * game.arrow.angle) * 2048
+        camera.position.x = Math.cos(Math.PI / 180 * game.arrow.angle) * 1024
+        camera.position.z = Math.sin(Math.PI / 180 * game.arrow.angle) * 1024
         camera.lookAt(game.center)
 
       } else if (game.arrow.right) {
         game.arrow.angle -= 2;
-        camera.position.x = Math.cos(Math.PI / 180 * game.arrow.angle) * 2048
-        camera.position.z = Math.sin(Math.PI / 180 * game.arrow.angle) * 2048
+        camera.position.x = Math.cos(Math.PI / 180 * game.arrow.angle) * 512
+        camera.position.z = Math.sin(Math.PI / 180 * game.arrow.angle) * 512
         camera.lookAt(game.center)
           // console.log(game.arrow.angle)
       }

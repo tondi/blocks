@@ -1,5 +1,6 @@
 function Game() {
   this.center = new THREE.Vector3(375, 0, 375)
+  this.currentBlock = null;
 
   function initBoard() {
     var el = (new ElementSiatki()).getElementSiatki();
@@ -30,16 +31,26 @@ function Game() {
   initBoard()
     //   console.log(main)
 
-  this.addBlock = function addBlock(x, y, z) {
+  this.addBlock = function addBlock(x = 0, y = 0, z = 0) {
     var klocek = (new Klocek()).getKlocek();
     main.scene.add(klocek)
     klocek.position.set(x, y, z)
+    this.currentBlock = klocek;
+
+    // console.log(this.currentBlock)
+  }
+
+  this.changeBlockColor = function(color) {
+    console.log(this.currentBlock.children[1].material)
+      // console.log(...color.reverse())
+    this.currentBlock.children[0].material.color.setHex(color);
+    this.currentBlock.children[1].material.color.setHex(color);
+
   }
 
 
-
   //   console.log(main.scene.children)
-  console.log(main.scene.children)
+  //   console.log(main.scene.children)
 
 
 
