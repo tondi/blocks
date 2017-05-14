@@ -72,7 +72,7 @@ function Main() {
 
       var arr = name.split("_")
       var obj = arr[0];
-      console.log(obj);
+      // console.log(obj);
       var x = arr[1];
       var z = arr[2];
       if (obj == "plane") {
