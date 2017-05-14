@@ -30,21 +30,8 @@ function ElementSiatki() {
 
 
     planeMesh.rotateX(-Math.PI / 2)
-      // reverse because we set position. cant be 0
-    for (let x = 0; x < 15; x++) {
-      for (let z = 0; z < 15; z++) {
-        // console.log(i)
-        let planeClone = planeMesh.clone()
-        let lineClone = line.clone();
+    line.position.set(-25, 0, -25)
 
-
-        container.add(planeClone)
-        container.add(lineClone)
-        lineClone.position.set(x * 50 - 25, 0, z * 50 - 25)
-        planeClone.position.set(x * 50, 0, z * 50)
-
-      }
-    }
     // material = new THREE.MeshBasicMaterial({
     //     color: 0xff6600,
     //     transparent: true,
@@ -71,8 +58,8 @@ function ElementSiatki() {
     // }
 
     // light = new THREE.PointLight(0xff6600, 1, 500, 2);
-    // container.add(line)
-    // container.add(planeMesh)
+    container.add(line)
+    container.add(planeMesh)
 
   }
 
