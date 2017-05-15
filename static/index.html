@@ -10,19 +10,21 @@
     <script src="js/Klocek.js"></script>
     <script src="js/non-class/keyboard.js"></script>
     <script src="libs/three.js"></script>
+    <script src="js/Network.js"></script>
     <!--TODO Change to libs-->
-    <!--<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>-->
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
     <script>
         var main;
         var game;
+        var network;
         window.addEventListener("load", function() {
             // elementSiatki = new ElementSiatki();
             main = new Main();
             game = new Game();
+            network = new Network();
+            // console.log(network)
 
-            var socket = io();
+            network.publishObjects()
         })
     </script>
     <style>
