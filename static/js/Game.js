@@ -33,76 +33,6 @@ function Game() {
     //   console.log(main)
 
 
-  // TODO: Think about synthetyzing with addBlock
-  // saves about 50 lines of code
-  this.addLegacyBlock = function(block) {
-
-    var klocek = (new Klocek()).getKlocek();
-    main.scene.add(klocek)
-    console.log(block)
-    klocek.position.set(block.x, block.y, block.z)
-      // klocek.name = `block_${x}_${z}`
-
-    this.currentBlock = klocek;
-    this.currentBlock.userData.countAddedX = 1;
-    this.currentBlock.userData.countAddedZ = 1;
-  }
-
-  this.changeLegacyBlockColor = function(color) {
-    // console.log(this.currentBlock.children)
-    this.currentBlock.children.forEach(function(el) {
-      //   console.log(el)
-      if (el.children.length) {
-        el.children.forEach(function(inEl) {
-          //   console.log("inel: ", inEl);
-          inEl.material.color.setHex(color);
-        })
-      } else {
-        el.material.color.setHex(color);
-      }
-    })
-
-    // socket
-  }
-
-  this.changeLegacyBlockSize = function(direction) {
-    console.log(direction)
-
-    if (direction == "x") {
-      for (let i = 0; i < this.currentBlock.userData.countAddedZ; i++) {
-        // var additionalBlocks = [];
-
-        let additionalOne = (new Klocek).getKlocek()
-          // additionalBlocks.push();
-        additionalOne.position.set(this.currentBlock.userData.countAddedX * 50, 0, i * 50)
-        this.currentBlock.add(additionalOne)
-
-      }
-      //   additionalBlock.position.set(this.currentBlock.userData.countAddedX * 50, 0, 0)
-      this.currentBlock.userData.countAddedX++;
-    }
-    if (direction == "z") {
-      for (let i = 0; i < this.currentBlock.userData.countAddedX; i++) {
-        // var additionalBlocks = [];
-
-        let additionalOne = (new Klocek).getKlocek()
-          // additionalBlocks.push();
-        additionalOne.position.set(i * 50, 0, this.currentBlock.userData.countAddedZ * 50)
-        this.currentBlock.add(additionalOne)
-
-      }
-      //   additionalBlock.position.set(this.currentBlock.userData.countAddedX * 50, 0, 0)
-      this.currentBlock.userData.countAddedZ++;
-    }
-    // this.currentBlock.children[0].material.color.setHex(color);
-    // console.log(main.scene.children)
-  }
-
-  this.changeLegacyBlockRotation = function(rad) {
-    this.currentBlock.rotateY(rad)
-
-  }
-
   this.addBlock = function addBlock(x = 0, y = 0, z = 0) {
     var klocek = (new Klocek()).getKlocek();
     main.scene.add(klocek)
@@ -181,6 +111,77 @@ function Game() {
     this.currentBlock.rotateY(rad)
     network.changeBlockRotation(rad)
   }
+
+  // TODO: Think about synthetyzing with addBlock
+  // saves about 50 lines of code
+  this.addLegacyBlock = function(block) {
+
+    var klocek = (new Klocek()).getKlocek();
+    main.scene.add(klocek)
+    console.log(block)
+    klocek.position.set(block.x, block.y, block.z)
+      // klocek.name = `block_${x}_${z}`
+
+    this.currentBlock = klocek;
+    this.currentBlock.userData.countAddedX = 1;
+    this.currentBlock.userData.countAddedZ = 1;
+  }
+
+  this.changeLegacyBlockColor = function(color) {
+    // console.log(this.currentBlock.children)
+    this.currentBlock.children.forEach(function(el) {
+      //   console.log(el)
+      if (el.children.length) {
+        el.children.forEach(function(inEl) {
+          //   console.log("inel: ", inEl);
+          inEl.material.color.setHex(color);
+        })
+      } else {
+        el.material.color.setHex(color);
+      }
+    })
+
+    // socket
+  }
+
+  this.changeLegacyBlockSize = function(direction) {
+    console.log(direction)
+
+    if (direction == "x") {
+      for (let i = 0; i < this.currentBlock.userData.countAddedZ; i++) {
+        // var additionalBlocks = [];
+
+        let additionalOne = (new Klocek).getKlocek()
+          // additionalBlocks.push();
+        additionalOne.position.set(this.currentBlock.userData.countAddedX * 50, 0, i * 50)
+        this.currentBlock.add(additionalOne)
+
+      }
+      //   additionalBlock.position.set(this.currentBlock.userData.countAddedX * 50, 0, 0)
+      this.currentBlock.userData.countAddedX++;
+    }
+    if (direction == "z") {
+      for (let i = 0; i < this.currentBlock.userData.countAddedX; i++) {
+        // var additionalBlocks = [];
+
+        let additionalOne = (new Klocek).getKlocek()
+          // additionalBlocks.push();
+        additionalOne.position.set(i * 50, 0, this.currentBlock.userData.countAddedZ * 50)
+        this.currentBlock.add(additionalOne)
+
+      }
+      //   additionalBlock.position.set(this.currentBlock.userData.countAddedX * 50, 0, 0)
+      this.currentBlock.userData.countAddedZ++;
+    }
+    // this.currentBlock.children[0].material.color.setHex(color);
+    // console.log(main.scene.children)
+  }
+
+  this.changeLegacyBlockRotation = function(rad) {
+    this.currentBlock.rotateY(rad)
+
+  }
+
 
 
   //   console.log(main.scene.children)
