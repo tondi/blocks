@@ -48,6 +48,7 @@ connectToMongo();
 opers.DeleteAll(Models.User)
 
 // Create admin on start
+// Temporarily has user previgles (is part of User shema)
 function createAdmin() {
 
   var admin = new Models.User({

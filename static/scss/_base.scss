@@ -13,4 +13,6 @@ body {
 
 .hidden {
     opacity: 0;
+    // for development Needs testing
+    z-index: -1 !important;
 }
