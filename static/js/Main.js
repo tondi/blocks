@@ -27,6 +27,7 @@ function Main() {
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setClearColor(0x000000);
+  renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.getElementById("main").appendChild(renderer.domElement);
 
@@ -162,7 +163,7 @@ function Main() {
     // Working with surface pro 2 now
     setTimeout(() => {
       requestAnimationFrame(animateScene);
-    }, 1000 / 30)
+    }, 1000 / 5)
 
 
   }())

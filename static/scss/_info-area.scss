@@ -1,0 +1,33 @@
+// @keyframes anim {
+//     from {
+//         // opacity: 1;
+//         visibility: visible;
+//     }
+//     to {
+//         // opacity: 0;
+//         visibility: hidden;
+//     }
+// }
+.info-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10%;
+    z-index: 3;
+    // animation-name: anim;
+    // animation-duration: 1s;
+    .info {
+        font-size: 2em;
+        color: white;
+        // visibility: visible;
+        transition: 1s;
+    }
+}
+
+.visible {
+    opacity: 1;
+}
+
+.hidden {
+    opacity: 0;
+}

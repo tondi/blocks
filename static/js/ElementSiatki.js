@@ -25,7 +25,7 @@ function ElementSiatki() {
     var line = new THREE.Line(geometry, lineMaterial);
 
     const planeGeometry = new THREE.PlaneGeometry(50, 50);
-    const planeMaterial = new THREE.MeshBasicMaterial({ color: "#015547", side: THREE.DoubleSide });
+    const planeMaterial = new THREE.MeshBasicMaterial({ color: "#2D6E96", side: THREE.DoubleSide });
     const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
 
 

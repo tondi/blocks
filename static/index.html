@@ -4,6 +4,7 @@
 <head>
     <title></title>
     <meta charset="utf-8" />
+    <meta name='viewport' content='width=device-width' />
     <script src="js/Main.js"></script>
     <script src="js/Game.js"></script>
     <script src="js/ElementSiatki.js"></script>
@@ -12,6 +13,7 @@
     <script src="libs/three.js"></script>
     <script src="js/Network.js"></script>
     <script src="js/non-class/window-listener.js"></script>
+    <script defer src="js/non-class/UI.js"></script>
     <!--TODO Change to libs-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
     <script>
@@ -28,19 +30,31 @@
             // network.publishObjects()
         })
     </script>
-    <style>
-        body {
-            width: 100vw;
-            height: 100vh;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
+    <link rel="stylesheet" type="text/css" href="style.css">
     </style>
-    <!--<style type="text/css" href="style.css"></style>-->
 </head>
 
 <body>
+    <div class="info-container ">
+        <div class="info"></div>
+    </div>
+    <div class="login-container">
+        <div class="login">
+            <!--<div class="logo">
+                <img class="logo_img" src="assets/logo.svg" alt="Gora_dobra_logo">
+            </div>-->
+
+            <div class="inputs">
+                <input id="login" placeholder="&#61447;  login" type="text" autofocus/>
+                <input id="password" placeholder="&#xf023;  password" type="password" />
+                <input class="login-bt" type="button" value="ZALOGUJ">
+            </div>
+
+            <a href="#" class="register">
+                Zarejestruj się
+            </a>
+        </div>
+    </div>
     <div id="main"></div>
 
 </body>

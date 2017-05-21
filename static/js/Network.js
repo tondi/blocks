@@ -24,60 +24,79 @@
 
 // TODO: Clean up this fucking mess in Game.js legacy functions 
 function Network() {
-    // this.test = "x"
-    var socket = io();
+  // this.test = "x"
+  var socket = io();
 
-    this.addBlock = function(block) {
-            var blockInfo = {
-                rot: block.rotation,
-                x: block.position.x,
-                y: block.position.y,
-                z: block.position.z,
-                // temporarily
-                color: block.children[0].material.color,
-                num: 1
-            }
+  this.addBlock = function(block) {
+      var blockInfo = {
+        rot: block.rotation,
+        x: block.position.x,
+        y: block.position.y,
+        z: block.position.z,
+        // temporarily
+        color: block.children[0].material.color,
+        num: 1
+      }
 
-            // send to server
-            socket.emit("block/add", blockInfo)
+      // send to server
+      socket.emit("block/add", blockInfo)
 
-            // recieve from server
-        }
-        // socket.broadcast.to('game').emit('message', 'nice game');
-    socket.on("block/add", data => {
-        game.addLegacyBlock(data)
-    })
-
-    //  ------- rozmiar
-    this.changeBlockSize = function(direction) {
-        socket.emit("block/change-size", direction)
+      // recieve from server
     }
-    socket.on("block/change-size", data => {
-        game.changeLegacyBlockSize(data)
-    })
+    // socket.broadcast.to('game').emit('message', 'nice game');
+  socket.on("block/add", data => {
+    game.addLegacyBlock(data)
+  })
 
-    // ------- color
-    this.changeBlockColor = function(color) {
-        socket.emit("block/change-color", color)
+  //  ------- rozmiar
+  this.changeBlockSize = function(direction) {
+    socket.emit("block/change-size", direction)
+  }
+  socket.on("block/change-size", data => {
+    game.changeLegacyBlockSize(data)
+  })
+
+  // ------- color
+  this.changeBlockColor = function(color) {
+    socket.emit("block/change-color", color)
+  }
+  socket.on("block/change-color", data => {
+    game.changeLegacyBlockColor(data)
+  })
+
+  // ------- rotation
+  this.changeBlockRotation = function(rotation) {
+    socket.emit("block/change-rotation", rotation)
+  }
+  socket.on("block/change-rotation", data => {
+    game.changeLegacyBlockRotation(data)
+  })
+
+
+  // var sceneData = main.scene.toJSON();
+
+  // this.publishObjects = function() {
+
+  //     console.log(sceneData)
+  //     socket.emit("data/scene-children", { data: sceneData })
+  // }
+
+
+  this.register = function(data) {
+    socket.emit("user/register", data)
+  }
+  socket.on("user/register", (data) => {
+    UI.showInfo(data.text)
+
+  })
+
+  this.login = function(data) {
+    socket.emit("user/login", data)
+  }
+  socket.on("user/login", (data) => {
+    UI.showInfo(data.text)
+    if (data.succes == true) {
+      console.log("succes logging! :)")
     }
-    socket.on("block/change-color", data => {
-        game.changeLegacyBlockColor(data)
-    })
-
-    // ------- rotation
-    this.changeBlockRotation = function(rotation) {
-        socket.emit("block/change-rotation", rotation)
-    }
-    socket.on("block/change-rotation", data => {
-        game.changeLegacyBlockRotation(data)
-    })
-
-
-    // var sceneData = main.scene.toJSON();
-
-    // this.publishObjects = function() {
-
-    //     console.log(sceneData)
-    //     socket.emit("data/scene-children", { data: sceneData })
-    // }
+  })
 }
