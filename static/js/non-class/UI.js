@@ -46,10 +46,6 @@ let UI = {
     registerBt.value = "Zaloguj"
     registerBt.removeEventListener("mousedown", UI.registerOperations)
     registerBt.className = "login-bt"
-
-
-
-
   }
 }
 
@@ -67,4 +63,10 @@ document.querySelector(".register").addEventListener("mousedown", () => {
 document.querySelector(".login-bt").addEventListener("mousedown", () => {
   let data = UI.getUserCredientals();
   network.login(data);
+})
+
+document.querySelector(".save-building").addEventListener("mousedown", () => {
+  // let data = UI.getUserCredientals();
+  // network.login(data);
+
 })

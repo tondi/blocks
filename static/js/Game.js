@@ -1,6 +1,7 @@
 function Game() {
   this.center = new THREE.Vector3(375, 0, 375)
   this.currentBlock = null;
+  this.buildingAllowed = false;
 
   function initBoard() {
 
@@ -33,25 +34,31 @@ function Game() {
     //   console.log(main)
 
 
+
   this.addBlock = function addBlock(x = 0, y = 0, z = 0) {
-    var klocek = (new Klocek()).getKlocek();
-    main.scene.add(klocek)
-    klocek.position.set(x * 50, y * 30, z * 50)
-    klocek.name = `block_${x}_${z}`
 
-    this.currentBlock = klocek;
-    this.currentBlock.userData.countAddedX = 1;
-    this.currentBlock.userData.countAddedZ = 1;
-    // this.currentBlock.userData.countAddedY = 1;
-    // if (y > 0) {
-    //   //   this.currentBlock.userData.countAddedY++;
+    if (this.buildingAllowed) {
 
-    // }
+      var klocek = (new Klocek()).getKlocek();
+      main.scene.add(klocek)
+      klocek.position.set(x * 50, y * 30, z * 50)
+      klocek.name = `block_${x}_${z}`
 
-    // TODO: Figure if broadcast
-    network.addBlock(this.currentBlock);
+      this.currentBlock = klocek;
+      this.currentBlock.userData.countAddedX = 1;
+      this.currentBlock.userData.countAddedZ = 1;
+      // this.currentBlock.userData.countAddedY = 1;
+      // if (y > 0) {
+      //   //   this.currentBlock.userData.countAddedY++;
 
-    // console.log(this.currentBlock)
+      // }
+
+      // TODO: Figure if broadcast
+      network.addBlock(this.currentBlock);
+
+      // console.log(this.currentBlock)
+    }
+
   }
 
   this.changeBlockColor = function(color) {
