@@ -66,25 +66,25 @@ io.on('connection', function(socket) {
 
   // Temporarily during dev disabled
 
-  //   socket.on("block/add", data => {
-  //     console.log(data)
-  //     socket.broadcast.emit("block/add", data)
-  //   })
-  //   socket.on("block/change-color", data => {
-  //     console.log(data)
-  //     socket.broadcast.emit("block/change-color", data)
-  //   })
+  socket.on("block/add", data => {
+    console.log(data)
+    socket.broadcast.emit("block/add", data)
+  })
+  socket.on("block/change-color", data => {
+    console.log(data)
+    socket.broadcast.emit("block/change-color", data)
+  })
 
-  //   socket.on("block/change-size", data => {
-  //     console.log(data)
-  //       // io.sockets.emit("block/change-size", data)
-  //     socket.broadcast.emit("block/change-size", data)
-  //   })
+  socket.on("block/change-size", data => {
+    console.log(data)
+      // io.sockets.emit("block/change-size", data)
+    socket.broadcast.emit("block/change-size", data)
+  })
 
-  //   socket.on("block/change-rotation", data => {
-  //     console.log(data)
-  //     socket.broadcast.emit("block/change-rotation", data)
-  //   })
+  socket.on("block/change-rotation", data => {
+    console.log(data)
+    socket.broadcast.emit("block/change-rotation", data)
+  })
 
 
 
@@ -97,14 +97,12 @@ io.on('connection', function(socket) {
     var user = new Models.User({
       name: data.name,
       password: data.password
-
     });
 
     user.validate(function(err) {
       console.log("err:", err);
     });
 
-    // AddUser returns callback with communicate
     opers.AddUser(Models.User, user, function(data) {
       // Then we send it back to client
       io.sockets.to(socket.id).emit("user/register", data);
@@ -142,7 +140,10 @@ io.on('connection', function(socket) {
     //   }).limit(count)
     // },
 
-    opers.ValidateUser(Models.User, data.name, data.password, data => {
+    opers.ValidateUser(Models.User, data.name, data.password).then(data => {
+      console.log(data)
+      io.sockets.to(socket.id).emit("user/login", data);
+    }).catch(data => {
       console.log(data)
       io.sockets.to(socket.id).emit("user/login", data);
     })

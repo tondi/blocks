@@ -6,6 +6,12 @@ body {
   overflow: hidden;
   font-family: Lato Light; }
 
+.visible {
+  opacity: 1; }
+
+.hidden {
+  opacity: 0; }
+
 @font-face {
   font-family: "FontAwesome";
   src: url("../assets/FontAwesome.woff2"); }
@@ -24,7 +30,8 @@ body {
   -ms-flex-direction: column;
   flex-direction: column;
   color: white;
-  position: absolute; }
+  position: absolute;
+  transition: 0.5s; }
 
 .login {
   margin: auto; }
@@ -113,8 +120,20 @@ body {
     color: white;
     transition: 1s; }
 
-.visible {
-  opacity: 1; }
-
-.hidden {
-  opacity: 0; }
+.buildings-container {
+  position: absolute;
+  z-index: 2;
+  right: 2%;
+  top: 3%;
+  padding: 1% 2%;
+  border: 1px solid white;
+  border-radius: 3px;
+  color: white; }
+  .buildings-container .buildings {
+    text-align: center; }
+    .buildings-container .buildings__header {
+      font-size: 2em;
+      text-transform: uppercase; }
+    .buildings-container .buildings > div {
+      font-size: 1.6em;
+      margin: 1em 0; }

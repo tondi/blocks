@@ -1,6 +1,9 @@
+// TODO: pass admuin credientals and click register - logins instantly
+
 let UI = {
   nodes: {
     info: document.querySelector(".info"),
+    loginContainer: document.querySelector(".login-container"),
     login: document.querySelector("#login"),
     password: document.querySelector("#password")
   },
@@ -17,11 +20,11 @@ let UI = {
   },
 
   showInfo: function(text) {
+    UI.nodes.info.innerHTML = text;
     UI.nodes.info.classList.remove("hidden");
     UI.nodes.info.classList.add("visible");
     // UI.nodes.info.classList.toggle("hidden");
 
-    UI.nodes.info.innerHTML = text;
     setTimeout(() => {
       UI.nodes.info.classList.remove("visible");
       UI.nodes.info.classList.add("hidden");
@@ -31,15 +34,19 @@ let UI = {
 
   registerOperations: function() {
 
+
+    console.log("register")
     let data = UI.getUserCredientals();
     network.register(data)
 
     // transforms buitton back into login bt
     // registerBt must be dynamic because we swap its id
+
     let registerBt = document.querySelector(".register-bt");
-    registerBt.removeEventListener("mousedown", UI.registerOperations)
     registerBt.value = "Zaloguj"
+    registerBt.removeEventListener("mousedown", UI.registerOperations)
     registerBt.className = "login-bt"
+
 
 
 
@@ -53,7 +60,6 @@ document.querySelector(".register").addEventListener("mousedown", () => {
   loginBt.value = "Zarejestruj";
   loginBt.className = "register-bt";
   // document.addEventListener()
-  // console.log(loginBt)
   let registerBt = document.querySelector(".register-bt");
   registerBt.addEventListener("mousedown", UI.registerOperations)
 })

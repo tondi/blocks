@@ -6,3 +6,11 @@ body {
     overflow: hidden;
     font-family: Lato Light;
 }
+
+.visible {
+    opacity: 1;
+}
+
+.hidden {
+    opacity: 0;
+}

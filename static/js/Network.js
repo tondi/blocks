@@ -85,7 +85,7 @@ function Network() {
   this.register = function(data) {
     socket.emit("user/register", data)
   }
-  socket.on("user/register", (data) => {
+  socket.on("user/register", data => {
     UI.showInfo(data.text)
 
   })
@@ -93,10 +93,14 @@ function Network() {
   this.login = function(data) {
     socket.emit("user/login", data)
   }
-  socket.on("user/login", (data) => {
+  socket.on("user/login", data => {
     UI.showInfo(data.text)
     if (data.succes == true) {
       console.log("succes logging! :)")
+
+      UI.nodes.loginContainer.classList.remove("visible")
+      UI.nodes.loginContainer.classList.add("hidden")
+
     }
   })
 }

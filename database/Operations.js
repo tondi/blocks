@@ -4,61 +4,118 @@ module.exports = function() {
 
     // wstawienie jednego "rekordu" do dokumentu - INSERT
 
+    // AddUser: function(Model, data, cb) {
+    //   let any = new RegExp(".");
+    //   opers.ValidateUser(Model, data.name, any, (resp) => {
+    //     console.log("resp:", resp)
+    //     if (!resp.succes) {
+
+    //       data.save(function(error, data, dodanych) {
+    //         console.log("added " + data)
+    //         if (error) {
+    //           let response = {
+    //             succes: false,
+    //             text: "Błąd rejestracji użytkownika"
+    //           }
+    //           cb(response);
+    //           return console.error(error);
+
+    //         }
+    //         let response = {
+    //           succes: true,
+    //           text: "Zarejestrowano"
+    //         }
+    //         cb(response)
+
+    //       })
+    //     } else {
+    //       // istnieje user
+    //       cb({ succes: false, text: "User already exists" })
+    //       console.log("user already exists")
+    //     }
+    //   })
+
+    // },
     AddUser: function(Model, data, cb) {
       let any = new RegExp(".");
-      opers.ValidateUser(Model, data.name, any, (resp) => {
+      // In our case rejection is succes "User with this name was not found we can add it"
+      opers.ValidateUser(Model, data.name, any).catch((resp) => {
         console.log("resp:", resp)
-        if (!resp.succes) {
 
-          data.save(function(error, data, dodanych) {
-            console.log("added " + data)
-            if (error) {
-              let response = {
-                succes: false,
-                text: "Błąd rejestracji użytkownika"
-              }
-              cb(response);
-              return console.error(error);
 
-            }
+        data.save(function(error, data, dodanych) {
+          console.log("added " + data)
+          if (error) {
             let response = {
-              succes: true,
-              text: "Zarejestrowano"
+              succes: false,
+              text: "Błąd rejestracji użytkownika"
             }
-            cb(response)
+            cb(response);
+            return console.error(error);
 
-          })
-        } else {
-          // istnieje user
-          cb({ succes: false, text: "User already exists" })
-          console.log("user already exists")
-        }
+          }
+          let response = {
+            succes: true,
+            text: "Zarejestrowano"
+          }
+          cb(response)
+
+        })
+      }).then((data) => {
+
+        cb({ succes: false, text: "User already exists" })
+        console.log("user already exists")
       })
+
 
     },
 
     //pobranie z ograniczeniem ilości i warunkiem - WHERE, LIMIT
 
-    ValidateUser: function(Model, name, password, cb) {
-      Model.find({ name: name, password: password }, function(err, data) {
-        if (err) return console.error(err);
-        console.log(data);
-        if (data.length) {
-          let response = {
-            succes: true,
-            text: "Succesfuly logged in"
+    ValidateUser: function(Model, name, password) {
+      return new Promise((resolve, reject) => {
+        Model.find({ name: name, password: password }, function(err, data) {
+          if (err) {
+            reject(err);
           }
-          cb(response);
-        } else {
-          let response = {
-            succes: false,
-            text: "User does not exist or password invalid"
+          console.log(data);
+          if (data.length) {
+            let response = {
+              succes: true,
+              text: "Succesfuly logged in"
+            }
+            resolve(response);
+          } else {
+            let response = {
+              succes: false,
+              text: "User does not exist or password invalid"
+            }
+            reject(response)
           }
-          cb(response)
-        }
 
-      }).limit(1);
+        }).limit(1);
+      })
     },
+    // ValidateUser: function(Model, name, password, cb) {
+    //   Model.find({ name: name, password: password }, function(err, data) {
+    //     if (err) return console.error(err);
+    //     console.log(data);
+    //     if (data.length) {
+    //       let response = {
+    //         succes: true,
+    //         text: "Succesfuly logged in"
+    //       }
+    //       cb(response);
+    //     } else {
+    //       let response = {
+    //         succes: false,
+    //         text: "User does not exist or password invalid"
+    //       }
+    //       cb(response)
+    //     }
+
+    //   }).limit(1);
+    // },
 
 
     // pobranie wszystkich "rekordów" z dokumentu - SELECT
@@ -96,7 +153,7 @@ module.exports = function() {
     DeleteAll: function(Model) {
       Model.remove(function(err, data) {
         if (err) return console.error(err);
-        console.log(data);
+        // console.log(data);
       })
     },
 
