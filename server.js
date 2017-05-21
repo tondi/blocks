@@ -16,6 +16,9 @@ var db;
 
 var opers = new Operations();
 
+var currentUser;
+var loggedUsers = [];
+
 function connectToMongo() {
 
   db = mongoose.connection;
@@ -45,6 +48,7 @@ connectToMongo();
 opers.DeleteAll(Models.User)
 
 // Create admin on start
+// Temporarily has user previgles (is part of User shema)
 function createAdmin() {
 
   var admin = new Models.User({
@@ -64,31 +68,7 @@ createAdmin();
 io.on('connection', function(socket) {
   console.log('a user connected');
 
-  // Temporarily during dev disabled
-
-  socket.on("block/add", data => {
-    console.log(data)
-    socket.broadcast.emit("block/add", data)
-  })
-  socket.on("block/change-color", data => {
-    console.log(data)
-    socket.broadcast.emit("block/change-color", data)
-  })
-
-  socket.on("block/change-size", data => {
-    console.log(data)
-      // io.sockets.emit("block/change-size", data)
-    socket.broadcast.emit("block/change-size", data)
-  })
-
-  socket.on("block/change-rotation", data => {
-    console.log(data)
-    socket.broadcast.emit("block/change-rotation", data)
-  })
-
-
-
-
+  // REGISTER
   socket.on("user/register", data => {
     console.log("register data: ", data)
 
@@ -109,44 +89,54 @@ io.on('connection', function(socket) {
     });
   })
 
-  socket.on("user/login", data => {
-    console.log("login data: ", data)
+  // LOGGING
+  socket.on("user/login", userData => {
+    console.log("login data: ", userData)
 
-    // console.log("emit to " + socket.id)
-    // var user = new Models.User({
-    //   name: data.name,
-    //   password: data.password
+    // console.log(loggedUsers)
+    if (!loggedUsers.includes(userData.name)) {
+      opers.ValidateUser(Models.User, userData.name, userData.password).then(data => {
+        console.log(data)
+        io.sockets.to(socket.id).emit("user/login", data);
 
-    // });
+        // Set the user that builds
+        currentUser = userData.name;
+        loggedUsers.push(userData.name)
+      }).catch(data => {
+        console.log(data)
+        io.sockets.to(socket.id).emit("user/login", data);
+      })
 
-    // user.validate(function(err) {
-    //   console.log("err:", err);
-    // });
-
-    // AddUser returns callback with communicate
-    // opers.AddUser(user, function(text) {
-    //   // Then we send it back to client
-    //   io.sockets.to(socket.id).emit("user/register", {
-    //     status: text
-    //   });
-    // });
-
-
-    // SelectByImie: function(Model, imie, count, callback) {
-    //   Model.find({ name: imie }, function(err, data) {
-    //     if (err) return console.error(err);
-    //     // console.log(data);
-    //     callback(data);
-    //   }).limit(count)
-    // },
-
-    opers.ValidateUser(Models.User, data.name, data.password).then(data => {
-      console.log(data)
+    } else {
+      let data = {
+        succes: false,
+        text: "User is already logged"
+      }
       io.sockets.to(socket.id).emit("user/login", data);
-    }).catch(data => {
-      console.log(data)
-      io.sockets.to(socket.id).emit("user/login", data);
-    })
+    }
+
+  })
+
+
+  // BUILDING
+  socket.on("block/add", data => {
+    console.log(data)
+    socket.broadcast.emit("block/add", data)
+  })
+  socket.on("block/change-color", data => {
+    console.log(data)
+    socket.broadcast.emit("block/change-color", data)
+  })
+
+  socket.on("block/change-size", data => {
+    console.log(data)
+      // io.sockets.emit("block/change-size", data)
+    socket.broadcast.emit("block/change-size", data)
+  })
+
+  socket.on("block/change-rotation", data => {
+    console.log(data)
+    socket.broadcast.emit("block/change-rotation", data)
   })
 
   socket.on("disconnect", function() {

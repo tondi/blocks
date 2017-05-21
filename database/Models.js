@@ -22,6 +22,11 @@ module.exports = function(mongoose) {
     password: { type: String, required: true },
   });
 
+  var buildingShema = new Schema({
+    login: { type: String, required: true },
+    building: { type: [], required: true },
+  });
+
 
   // obiekt który chcemy wyeksportować z tego pliku
   // może zawierać więcej niż jeden model,

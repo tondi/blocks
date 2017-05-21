@@ -4,38 +4,6 @@ module.exports = function() {
 
     // wstawienie jednego "rekordu" do dokumentu - INSERT
 
-    // AddUser: function(Model, data, cb) {
-    //   let any = new RegExp(".");
-    //   opers.ValidateUser(Model, data.name, any, (resp) => {
-    //     console.log("resp:", resp)
-    //     if (!resp.succes) {
-
-    //       data.save(function(error, data, dodanych) {
-    //         console.log("added " + data)
-    //         if (error) {
-    //           let response = {
-    //             succes: false,
-    //             text: "Błąd rejestracji użytkownika"
-    //           }
-    //           cb(response);
-    //           return console.error(error);
-
-    //         }
-    //         let response = {
-    //           succes: true,
-    //           text: "Zarejestrowano"
-    //         }
-    //         cb(response)
-
-    //       })
-    //     } else {
-    //       // istnieje user
-    //       cb({ succes: false, text: "User already exists" })
-    //       console.log("user already exists")
-    //     }
-    //   })
-
-    // },
     AddUser: function(Model, data, cb) {
       let any = new RegExp(".");
       // In our case rejection is succes "User with this name was not found we can add it"
@@ -96,27 +64,6 @@ module.exports = function() {
         }).limit(1);
       })
     },
-    // ValidateUser: function(Model, name, password, cb) {
-    //   Model.find({ name: name, password: password }, function(err, data) {
-    //     if (err) return console.error(err);
-    //     console.log(data);
-    //     if (data.length) {
-    //       let response = {
-    //         succes: true,
-    //         text: "Succesfuly logged in"
-    //       }
-    //       cb(response);
-    //     } else {
-    //       let response = {
-    //         succes: false,
-    //         text: "User does not exist or password invalid"
-    //       }
-    //       cb(response)
-    //     }
-
-    //   }).limit(1);
-    // },
-
 
     // pobranie wszystkich "rekordów" z dokumentu - SELECT
     // zwracamy uwagę na argument Model
