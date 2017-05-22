@@ -163,7 +163,7 @@ function Main() {
     // Working with surface pro 2 now
     setTimeout(() => {
       requestAnimationFrame(animateScene);
-    }, 1000 / 5)
+    }, 1000 / 3)
 
 
   }())

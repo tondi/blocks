@@ -2,6 +2,7 @@ function Game() {
   this.center = new THREE.Vector3(375, 0, 375)
   this.currentBlock = null;
   this.buildingAllowed = false;
+  this.buildings = []
 
   function initBoard() {
 

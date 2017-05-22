@@ -68,6 +68,57 @@ module.exports = function() {
     // pobranie wszystkich "rekordów" z dokumentu - SELECT
     // zwracamy uwagę na argument Model
 
+    SaveProject: function(data) {
+      return new Promise((resolve, reject) => {
+        data.save(function(error, data, dodanych) {
+          console.log("added " + data)
+            // console.log(error)
+          if (error) {
+            let response = {
+              succes: false,
+              text: "Błąd dodawania projektu"
+            }
+            reject(response);
+            // return console.error(error);
+          }
+          let response = {
+            succes: true,
+            text: "Zapisano projekt"
+          }
+          resolve(response)
+
+        })
+      })
+
+    },
+
+    SelectUserProjects: function(Model, name) {
+      return new Promise((resolve, reject) => {
+        Model.find({ login: name }, function(err, data) {
+          if (err) {
+            reject(err);
+          }
+          console.log(data);
+          if (data.length) {
+            let response = {
+              succes: true,
+              text: "User projects found",
+              data: data
+            }
+            resolve(response);
+          } else {
+            let response = {
+              succes: false,
+              text: "User does not have projects"
+            }
+            reject(response)
+          }
+
+        }); //.limit(1)
+      })
+    },
+
+
     SelectAll: function(Model, callback) {
       Model.find({}, function test(err, data) {
         if (err) return console.error(err);

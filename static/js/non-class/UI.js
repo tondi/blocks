@@ -68,5 +68,5 @@ document.querySelector(".login-bt").addEventListener("mousedown", () => {
 document.querySelector(".save-building").addEventListener("mousedown", () => {
   // let data = UI.getUserCredientals();
   // network.login(data);
-
+  network.saveBuildings()
 })

@@ -27,6 +27,20 @@ function Network() {
   // this.test = "x"
   var socket = io();
 
+  this.saveBuildings = function() {
+    socket.emit("project/save", game.buildings)
+
+  }
+  socket.on("project/save", data => {
+    // game.addLegacyBlock(data)
+    console.log(data)
+  })
+
+  socket.on("user/projects", data => {
+    // game.addLegacyBlock(data)
+    console.log("Projekty uzytkwnika:", data)
+  })
+
   // TODO: Here start adding to local var, then when save buildings called send them to server
   this.addBlock = function(block) {
       var blockInfo = {
@@ -38,6 +52,8 @@ function Network() {
         color: block.children[0].material.color,
         num: 1
       }
+      game.buildings.push(blockInfo)
+        // console.log(game.buildings)
 
       // send to server
       socket.emit("block/add", blockInfo)
@@ -141,7 +157,7 @@ function Network() {
   }
 
   // for development
-  //   this.login({ name: "admin", password: "admin" })
+  // this.login({ name: "admin", password: "admin" })
 
   socket.on("user/login", data => {
     UI.showInfo(data.text)
