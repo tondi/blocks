@@ -116,7 +116,8 @@ body {
   left: 50%;
   transform: translateX(-50%);
   top: 10%;
-  z-index: 4; }
+  z-index: 4;
+  text-align: center; }
   .info-container .info {
     font-size: 2em;
     color: white;

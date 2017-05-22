@@ -120,16 +120,50 @@ io.on('connection', function(socket) {
 
         console.log("obecnie zalogowani uzytwkonicy: ", loggedUsers)
 
-        // send users buildings
-        opers.SelectUserProjects(Models.Project, currentUser).then((response) => {
-          console.log("udalo sie znalzezc projekty. RESPONSE:", response)
-          io.sockets.to(socket.id).emit("user/projects", response.data);
+        if (loggedUser.name == "admin") {
+          console.log("admin logs")
+          let any = new RegExp(".");
+          opers.SelectUserProjects(Models.Project, any).then((response) => {
+            console.log("ADMIN: udalo sie znalzezc wszystkie projekty:", response)
+            io.sockets.to(socket.id).emit("user/projects", response.data);
 
-        }).catch(response => {
-          console.log("Nie udalo sie znalezc projektow", response)
-          io.sockets.to(socket.id).emit("user/projects", response);
+            // TODO remove this hack for displating users as admin 
+            let users = []
+            for (let value of response.data) {
+              if (users.indexOf(value.login) == -1) {
+                users.push(value.login)
+              }
+            }
 
-        })
+            var obj = {};
+
+            for (let i = 0; i < users.length; i++) {
+              for (let j = 0; j < response.data.length; j++) {
+                if (users[i] == response.data[j]) {
+                  obj[users[i]] = "response.data[j]";
+                }
+              }
+            }
+            // tu wysylam obj z przyporzadkowaniem peojektow userom
+            io.sockets.to(socket.id).emit("user/projects", users);
+          }).catch(response => {
+            console.log("ADMIN: Nie udalo sie znalezc projektow", response)
+            io.sockets.to(socket.id).emit("user/projects", response);
+
+          })
+        } else {
+          // send users buildings
+          opers.SelectUserProjects(Models.Project, currentUser).then((response) => {
+            console.log("udalo sie znalzezc projekty. RESPONSE:", response)
+            io.sockets.to(socket.id).emit("user/projects", response.data);
+
+          }).catch(response => {
+            console.log("Nie udalo sie znalezc projektow", response)
+            io.sockets.to(socket.id).emit("user/projects", response);
+
+          })
+
+        }
       }).catch(data => {
         console.log(data)
         io.sockets.to(socket.id).emit("user/login", data);

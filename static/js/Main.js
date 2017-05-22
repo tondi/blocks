@@ -4,20 +4,20 @@ function Main() {
   var scene, camera, renderer;
   scene = new THREE.Scene();
 
-  camera = new THREE.OrthographicCamera(
-    window.innerWidth / -2,
-    window.innerWidth / 2,
-    window.innerHeight / 2,
-    window.innerHeight / -2,
-    0, // minimalny zasięg musi być >= 0
-    10000);
+  // camera = new THREE.OrthographicCamera(
+  //   window.innerWidth / -2,
+  //   window.innerWidth / 2,
+  //   window.innerHeight / 2,
+  //   window.innerHeight / -2,
+  //   0, // minimalny zasięg musi być >= 0
+  //   10000);
 
-  // camera = new THREE.PerspectiveCamera(
-  //   60, // kąt patrzenia kamery (FOV - field of view)
-  //   window.innerWidth / window.innerHeight, // proporcje widoku, powinny odpowiadać proporjom naszego ekranu przeglądarki
-  //   0.1, // minimalna renderowana odległość
-  //   10000 // maxymalna renderowana odległość
-  // );
+  camera = new THREE.PerspectiveCamera(
+    60, // kąt patrzenia kamery (FOV - field of view)
+    window.innerWidth / window.innerHeight, // proporcje widoku, powinny odpowiadać proporjom naszego ekranu przeglądarki
+    0.1, // minimalna renderowana odległość
+    10000 // maxymalna renderowana odległość
+  );
 
   camera.position.set(-300, 250, -300)
 
@@ -161,9 +161,9 @@ function Main() {
     camera.updateProjectionMatrix();
 
     // Working with surface pro 2 now
-    // setTimeout(() => {
-    requestAnimationFrame(animateScene);
-    // }, 1000 / 3)
+    setTimeout(() => {
+      requestAnimationFrame(animateScene);
+    }, 1000 / 3)
 
 
   }())

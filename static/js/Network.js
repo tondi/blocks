@@ -38,7 +38,7 @@ function Network() {
 
   socket.on("user/projects", data => {
     // game.addLegacyBlock(data)
-    console.log("Projekty uzytkwnika:", data)
+    console.log("Projekty:", data)
   })
 
   // TODO: Here start adding to local var, then when save buildings called send them to server
