@@ -122,32 +122,22 @@ io.on('connection', function(socket) {
         console.log("obecnie zalogowani uzytwkonicy: ", loggedUsers)
 
         if (loggedUser.name == "admin") {
-          console.log("admin logs")
           let any = new RegExp(".");
           opers.SelectUserProjects(Models.Project, any).then((response) => {
             // FOR DEV
-            // console.log("ADMIN: udalo sie znalzezc wszystkie projekty:", response)
-            // io.sockets.to(socket.id).emit("user/projects", response.data);
+            io.sockets.to(socket.id).emit("user/projects", response.data);
 
-            // // TODO remove this hack for displating users as admin 
-            // let users = []
-            // for (let value of response.data) {
-            //   if (users.indexOf(value.login) == -1) {
-            //     users.push(value.login)
-            //   }
-            // }
+            // Nice!
+            let users = {}
+            for (let value of response.data) {
+              users[value.login] = users[value.login] || [];
+              users[value.login].push(value)
+            }
 
-            // var obj = {};
+            // console.log(users)
+            io.sockets.to(socket.id).emit("user/users", users);
 
-            // for (let i = 0; i < users.length; i++) {
-            //   for (let j = 0; j < response.data.length; j++) {
-            //     if (users[i] == response.data[j]) {
-            //       obj[users[i]] = "response.data[j]";
-            //     }
-            //   }
-            // }
-            // // tu wysylam obj z przyporzadkowaniem peojektow userom
-            // io.sockets.to(socket.id).emit("user/projects", users);
+
           }).catch(response => {
             console.log("ADMIN: Nie udalo sie znalezc projektow", response)
             io.sockets.to(socket.id).emit("user/projects", response);
@@ -198,7 +188,7 @@ io.on('connection', function(socket) {
       loggedUsers.splice(index, 1)
       let data = {
         success: true,
-        text: "Sucecssfully logged out"
+        text: "Successfully logged out"
       }
       io.sockets.to(socket.id).emit("user/logout", data);
     }

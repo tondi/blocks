@@ -25,23 +25,15 @@
 
 // TODO: Use fontAwesome arrows instead of text
 .help {
-    // width: 90%;
-    // text-align: center;
     width: 100%;
-    // margin-top: 0.8em;
-    // font-family: Lato;
     border: none;
-    // font-family: "FontAwesome", "Lato Light";
-    // cursor: pointer;
-    // font-size: 1.5em;
-    // -webkit-appearance: none; // Zeruje domyslny styl input type=button w Safari na iph
-    // -webkit-border-radius: 0;
 }
 
 .user-info-container {
     @extend .interface-block;
     top: 3%;
     right: 2%;
+    min-width: 10%;
 }
 
 .user-info {
@@ -67,16 +59,39 @@
     @extend .interface-block;
     left: 2%;
     top: 3%;
-    // width: ;
-    // height: 94%;
+    min-width: 9%;
     .buildings {
         &__header {
-            font-size: 2em;
+            font-size: 1.6em;
             text-transform: uppercase;
         }
         >div {
-            font-size: 1.6em;
-            margin: 1em 0;
+            margin: 1em 2em;
+        }
+        &__user {
+            font-size: 1rem;
+            display: flex;
+            flex-direction: row;
+            &__image {
+                flex: 1;
+                width: 100%;
+                height: 0;
+                // margin-bottom: 100%;
+                font-family: FontAwesome;
+                &::before {
+                    content: "";
+                    display: block;
+                    padding-top: 100%;
+                    background: gray;
+                }
+            }
+            &__text {
+                transform: translateX(1em);
+                flex: 3;
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+            }
         }
     }
 }

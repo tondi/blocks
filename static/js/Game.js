@@ -84,7 +84,7 @@ function Game() {
       }
     })
 
-    console.log(color)
+    // console.log(color)
     this.currentBlock.userData.color = color;
 
     // socket
@@ -93,7 +93,7 @@ function Game() {
 
   // Every new subblock adds to block object3d container 
   this.changeBlockSize = function(direction) {
-    console.log(this.currentBlock)
+    // console.log(this.currentBlock)
 
     if (direction == "x") {
       for (let i = 0; i < this.currentBlock.userData.countAddedZ; i++) {

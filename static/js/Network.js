@@ -28,13 +28,7 @@ function Network() {
   var socket = io();
 
   this.saveBuildings = function() {
-    // console.log(game.buildings)
-    // for (let value of main.scene.children) {
-    //   // console.log(value.name)
-    //   if (value.name.split("_")[0] == "block") {
-    //     console.log(value)
-    //   }
-    // }
+
     let project = {
       buildings: [],
       date: (new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString()
@@ -43,15 +37,8 @@ function Network() {
     let buildings = main.scene.children.filter(e => {
       return e.name.split("_")[0] == "block"
     })
-    console.log(buildings)
 
     for (let value of buildings) {
-
-      // project.buildings.push(value.name)
-
-      // if (value.children.length > 1) {
-      //   project.buildings[value..length - 1]
-      // }
 
       for (let value of buildings) {
         let data = {
@@ -85,6 +72,10 @@ function Network() {
   socket.on("user/projects", data => {
     // game.addLegacyBlock(data)
     console.log("Saved projects:", data)
+  })
+  socket.on("user/users", data => {
+    // game.addLegacyBlock(data)
+    console.log("Users:", data)
   })
 
   // TODO: Here start adding to local var, then when save buildings called send them to server
@@ -195,7 +186,7 @@ function Network() {
   }
   socket.on("user/register", data => {
     UI.showInfo(data.text)
-
+    console.log(data)
   })
 
   this.login = function(data) {
@@ -208,6 +199,7 @@ function Network() {
 
   socket.on("user/logout", data => {
     UI.showInfo(data.text)
+    console.log(data)
     if (data.success = true) {
       UI.nodes.loginContainer.classList.remove("hidden")
       UI.nodes.loginContainer.classList.add("visible")
@@ -216,7 +208,6 @@ function Network() {
       UI.nodes.buildingsContainer.classList.remove("visible")
       UI.nodes.buildingsContainer.classList.add("hidden")
       game.buildingAllowed = false;
-
     }
   })
 
@@ -225,6 +216,7 @@ function Network() {
 
   socket.on("user/login", data => {
     UI.showInfo(data.text)
+    console.log(data)
     if (data.success == true) {
       UI.nodes.loggedAs.innerHTML = data.name;
       game.buildingAllowed = true;
