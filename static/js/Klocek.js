@@ -7,6 +7,7 @@ function Klocek() {
 
   // kontener
   var container = new THREE.Object3D();
+  var singleMesh;
 
   // init
   function init() {
@@ -87,8 +88,9 @@ function Klocek() {
 
 
 
-    var singleMesh = new THREE.Mesh(singleGeometry, cylinderMaterial);
-
+    singleMesh = new THREE.Mesh(singleGeometry, cylinderMaterial);
+    // for dev
+    // singleMesh.add(edges)
 
     container.add(singleMesh)
       // container.add(cylinder)
@@ -102,6 +104,10 @@ function Klocek() {
 
   this.getKlocek = function() {
     return container;
+  }
+
+  this.getFirstBlock = function() {
+    return (new THREE.Object3D).add(container);
   }
 
   // inne funkcje publiczne, np zmiana koloru bryły, zmiana koloru światła

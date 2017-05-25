@@ -5,7 +5,10 @@ let UI = {
     info: document.querySelector(".info"),
     loginContainer: document.querySelector(".login-container"),
     login: document.querySelector("#login"),
-    password: document.querySelector("#password")
+    password: document.querySelector("#password"),
+    loggedAs: document.querySelector(".user-info__logged-as"),
+    userInfoContainer: document.querySelector(".user-info-container"),
+    buildingsContainer: document.querySelector(".buildings-container")
   },
 
   getUserCredientals: function() {
@@ -69,4 +72,8 @@ document.querySelector(".save-building").addEventListener("mousedown", () => {
   // let data = UI.getUserCredientals();
   // network.login(data);
   network.saveBuildings()
+})
+
+document.querySelector(".user-info__log-out").addEventListener("mousedown", () => {
+  network.logOut();
 })

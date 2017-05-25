@@ -28,6 +28,20 @@ function Network() {
   var socket = io();
 
   this.saveBuildings = function() {
+    // console.log(game.buildings)
+    // for (let value of main.scene.children) {
+    //   // console.log(value.name)
+    //   if (value.name.split("_")[0] == "block") {
+    //     console.log(value)
+    //   }
+    // }
+    var buildings = main.scene.children.filter(e => {
+      return e.name.split("_")[0] == "block"
+    })
+
+    console.log(buildings)
+
+
     socket.emit("project/save", game.buildings)
 
   }
@@ -54,8 +68,8 @@ function Network() {
       }
       game.buildings.push(blockInfo)
         // console.log(game.buildings)
-
-      // send to server
+        // console.log(main.scene.children)
+        // send to server
       socket.emit("block/add", blockInfo)
     }
     // socket.broadcast.to('game').emit('message', 'nice game');
@@ -156,16 +170,39 @@ function Network() {
     socket.emit("user/login", data)
   }
 
+  this.logOut = function() {
+    socket.emit("user/logout", {})
+  }
+
+  socket.on("user/logout", data => {
+    UI.showInfo(data.text)
+    if (data.success = true) {
+      UI.nodes.loginContainer.classList.remove("hidden")
+      UI.nodes.loginContainer.classList.add("visible")
+      UI.nodes.userInfoContainer.classList.remove("visible")
+      UI.nodes.userInfoContainer.classList.add("hidden")
+      UI.nodes.buildingsContainer.classList.remove("visible")
+      UI.nodes.buildingsContainer.classList.add("hidden")
+      game.buildingAllowed = false;
+
+    }
+  })
+
   // for development
-  // this.login({ name: "admin", password: "admin" })
+  this.login({ name: "admin", password: "admin" })
 
   socket.on("user/login", data => {
     UI.showInfo(data.text)
-    if (data.succes == true) {
-      console.log("succes logging! :)")
+    if (data.success == true) {
+      console.log("success logging! :)")
+      UI.nodes.loggedAs.innerHTML = data.name;
       game.buildingAllowed = true;
       UI.nodes.loginContainer.classList.remove("visible")
       UI.nodes.loginContainer.classList.add("hidden")
+      UI.nodes.userInfoContainer.classList.remove("hidden")
+      UI.nodes.userInfoContainer.classList.add("visible")
+      UI.nodes.buildingsContainer.classList.remove("hidden")
+      UI.nodes.buildingsContainer.classList.add("visible")
 
     }
   })

@@ -69,21 +69,35 @@ function Main() {
       // console.log(intersects);
 
       // changed to parent
+      var mesh = intersects[0].object.parent;
       var name = intersects[0].object.parent.name;
+      console.log("kliknieto", mesh)
 
       var arr = name.split("_")
       var obj = arr[0];
       // console.log(obj);
-      var x = arr[1];
-      var z = arr[2];
+      var x = Number(arr[1]);
+      var z = Number(arr[2]);
+      var y = Number(arr[3]);
       if (obj == "plane") {
         game.addBlock(x, 0, z)
       }
-      // TODO Figure out how to stack blocks
-      // 1. In original lego there are no 2 level height blopcks, so I want it too
+      // DONE
       if (obj == "block") {
-        game.addBlock(x, 1, z)
-        intersects[0].object.parent.countAddedY++;
+        // console.log(mesh)
+        game.addBlock(x, mesh.userData.countAddedY + 1, z)
+        mesh.userData.countAddedY++;
+        // console.log(intersects[0].object.parent.userData.countAddedY)
+      }
+      if (obj == "subBlock") {
+        // console.log(mesh)
+        // console.log(mesh.parent.name)
+        console.log(Number(mesh.parent.name.split("_")[1]) + x, mesh.userData.countAddedY + y, Number(mesh.parent.name.split("_")[2]) + z)
+          // TODO
+        game.addBlock(Number(mesh.parent.name.split("_")[1]) + x, mesh.userData.countAddedY + y, Number(mesh.parent.name.split("_")[2]) + z)
+          // console.log("mesh userdata count y", mesh.userData.countAddedY, "y", y)
+        mesh.userData.countAddedY++;
+        // console.log(intersects[0].object.parent.userData.countAddedY)
       }
 
     }
@@ -129,25 +143,25 @@ function Main() {
 
     }
     if (keyboard.arrow.up) {
-      camera.position.y += 5;
+      camera.position.y += 20;
       camera.lookAt(game.center)
 
     } else if (keyboard.arrow.down) {
-      camera.position.y -= 5;
+      camera.position.y -= 15;
       camera.lookAt(game.center)
 
     }
     // TODO set center of camera rotation ?? Now it rotates over 0
     if (keyboard.arrow.left) {
       // camera.position.x += 5;
-      keyboard.arrow.angle += 2;
+      keyboard.arrow.angle += 4;
       // 350 is the center of a board both in x and z
       camera.position.x = Math.cos(Math.PI / 180 * keyboard.arrow.angle) * 1000 + 350
       camera.position.z = Math.sin(Math.PI / 180 * keyboard.arrow.angle) * 1000 + 350
       camera.lookAt(game.center)
 
     } else if (keyboard.arrow.right) {
-      keyboard.arrow.angle -= 2;
+      keyboard.arrow.angle -= 4;
       camera.position.x = Math.cos(Math.PI / 180 * keyboard.arrow.angle) * 1000 + 350
       camera.position.z = Math.sin(Math.PI / 180 * keyboard.arrow.angle) * 1000 + 350
       camera.lookAt(game.center)
@@ -163,7 +177,7 @@ function Main() {
     // Working with surface pro 2 now
     setTimeout(() => {
       requestAnimationFrame(animateScene);
-    }, 1000 / 3)
+    }, 1000 / 10)
 
 
   }())

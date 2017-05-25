@@ -6,7 +6,7 @@ module.exports = function() {
 
     AddUser: function(Model, data, cb) {
       let any = new RegExp(".");
-      // In our case rejection is succes "User with this name was not found we can add it"
+      // In our case rejection is success "User with this name was not found we can add it"
       opers.ValidateUser(Model, data.name, any).catch((resp) => {
         console.log("resp:", resp)
 
@@ -15,7 +15,7 @@ module.exports = function() {
           console.log("added " + data)
           if (error) {
             let response = {
-              succes: false,
+              success: false,
               text: "Błąd rejestracji użytkownika"
             }
             cb(response);
@@ -23,7 +23,7 @@ module.exports = function() {
 
           }
           let response = {
-            succes: true,
+            success: true,
             text: "Zarejestrowano"
           }
           cb(response)
@@ -31,7 +31,7 @@ module.exports = function() {
         })
       }).then((data) => {
 
-        cb({ succes: false, text: "User already exists" })
+        cb({ success: false, text: "User already exists" })
         console.log("user already exists")
       })
 
@@ -49,14 +49,16 @@ module.exports = function() {
           console.log(data);
           if (data.length) {
             let response = {
-              succes: true,
-              text: "Succesfuly logged in"
+              success: true,
+              text: "Successfuly logged in",
+              name: name
             }
             resolve(response);
           } else {
             let response = {
-              succes: false,
-              text: "User does not exist or password invalid"
+              success: false,
+              text: "User does not exist or password invalid",
+              name: name
             }
             reject(response)
           }
@@ -75,14 +77,14 @@ module.exports = function() {
             // console.log(error)
           if (error) {
             let response = {
-              succes: false,
+              success: false,
               text: "Błąd dodawania projektu"
             }
             reject(response);
             // return console.error(error);
           }
           let response = {
-            succes: true,
+            success: true,
             text: "Zapisano projekt"
           }
           resolve(response)
@@ -98,17 +100,17 @@ module.exports = function() {
           if (err) {
             reject(err);
           }
-          console.log(data);
+          // console.log(data);
           if (data.length) {
             let response = {
-              succes: true,
+              success: true,
               text: "User projects found",
               data: data
             }
             resolve(response);
           } else {
             let response = {
-              succes: false,
+              success: false,
               text: "User does not have projects"
             }
             reject(response)

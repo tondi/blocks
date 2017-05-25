@@ -93,8 +93,7 @@ io.on('connection', function(socket) {
   // LOGGING
   socket.on("user/login", userData => {
     console.log("login data: ", userData)
-
-
+    console.log("obecnie zalogowani uzytwkonicy: ", loggedUsers)
 
     // console.log("loggedusers", loggedUsers)
     // TODO Figure if below can be written easier with that if below
@@ -108,7 +107,6 @@ io.on('connection', function(socket) {
     if (!userAlreadyLogged /*!loggedUsers.includes(userData.name)*/ ) {
       opers.ValidateUser(Models.User, userData.name, userData.password).then(data => {
         console.log(data)
-        io.sockets.to(socket.id).emit("user/login", data);
 
         // Set the user that builds
         currentUser = userData.name;
@@ -118,34 +116,38 @@ io.on('connection', function(socket) {
         }
         loggedUsers.push(loggedUser)
 
+        // Send login inf
+        io.sockets.to(socket.id).emit("user/login", data);
+
         console.log("obecnie zalogowani uzytwkonicy: ", loggedUsers)
 
         if (loggedUser.name == "admin") {
           console.log("admin logs")
           let any = new RegExp(".");
           opers.SelectUserProjects(Models.Project, any).then((response) => {
-            console.log("ADMIN: udalo sie znalzezc wszystkie projekty:", response)
-            io.sockets.to(socket.id).emit("user/projects", response.data);
+            // FOR DEV
+            // console.log("ADMIN: udalo sie znalzezc wszystkie projekty:", response)
+            // io.sockets.to(socket.id).emit("user/projects", response.data);
 
-            // TODO remove this hack for displating users as admin 
-            let users = []
-            for (let value of response.data) {
-              if (users.indexOf(value.login) == -1) {
-                users.push(value.login)
-              }
-            }
+            // // TODO remove this hack for displating users as admin 
+            // let users = []
+            // for (let value of response.data) {
+            //   if (users.indexOf(value.login) == -1) {
+            //     users.push(value.login)
+            //   }
+            // }
 
-            var obj = {};
+            // var obj = {};
 
-            for (let i = 0; i < users.length; i++) {
-              for (let j = 0; j < response.data.length; j++) {
-                if (users[i] == response.data[j]) {
-                  obj[users[i]] = "response.data[j]";
-                }
-              }
-            }
-            // tu wysylam obj z przyporzadkowaniem peojektow userom
-            io.sockets.to(socket.id).emit("user/projects", users);
+            // for (let i = 0; i < users.length; i++) {
+            //   for (let j = 0; j < response.data.length; j++) {
+            //     if (users[i] == response.data[j]) {
+            //       obj[users[i]] = "response.data[j]";
+            //     }
+            //   }
+            // }
+            // // tu wysylam obj z przyporzadkowaniem peojektow userom
+            // io.sockets.to(socket.id).emit("user/projects", users);
           }).catch(response => {
             console.log("ADMIN: Nie udalo sie znalezc projektow", response)
             io.sockets.to(socket.id).emit("user/projects", response);
@@ -171,12 +173,37 @@ io.on('connection', function(socket) {
 
     } else {
       let data = {
-        succes: false,
+        success: false,
         text: "User is already logged"
       }
       io.sockets.to(socket.id).emit("user/login", data);
     }
 
+  })
+
+  socket.on("user/logout", data => {
+    console.log("logout id: ", socket.id)
+    console.log("logged users: ", loggedUsers);
+
+
+    let index;
+    for (let i in loggedUsers) {
+      if (loggedUsers[i].id == socket.id) {
+        index = i;
+      }
+    }
+    console.log("loggedUsers: ", loggedUsers, "index: ", index)
+    if (index !== -1) {
+      console.log("Usuwam usera o pozycji w loggedUsers", index)
+      loggedUsers.splice(index, 1)
+      let data = {
+        success: true,
+        text: "Sucecssfully logged out"
+      }
+      io.sockets.to(socket.id).emit("user/logout", data);
+    }
+    console.log("obecnie zalogowani uzytwkonicy: ", loggedUsers)
+      // socket.broadcast.emit("block/add", data)
   })
 
 
@@ -244,8 +271,19 @@ io.on('connection', function(socket) {
         disconnectedUser = value.name;
       }
     }
-    let index = loggedUsers.indexOf(disconnectedUser);
-    loggedUsers.splice(index, 1)
+    let index;
+    // let index = loggedUsers.indexOf(disconnectedUser);
+    for (let i in loggedUsers) {
+      if (loggedUsers[i].name == disconnectedUser) {
+        index = i;
+      }
+    }
+    console.log("loggedUsers: ", loggedUsers, "index: ", index)
+    if (index !== -1) {
+      console.log("Usuwam usera o pozycji w loggedUsers", index)
+      loggedUsers.splice(index, 1)
+
+    }
     console.log("obecnie zalogowani uzytwkonicy: ", loggedUsers)
   })
 });

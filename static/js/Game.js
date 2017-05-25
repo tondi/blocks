@@ -1,3 +1,7 @@
+// TODO 
+// remove unnecessary emits in changeBlocksize
+// building multi level with rotation on main block
+
 function Game() {
   this.center = new THREE.Vector3(375, 0, 375)
   this.currentBlock = null;
@@ -35,7 +39,8 @@ function Game() {
     //   console.log(main)
 
 
-
+  // DIFFRENT THAN ADD LEGACY
+  // Changed name | added z
   this.addBlock = function addBlock(x = 0, y = 0, z = 0) {
 
     if (this.buildingAllowed) {
@@ -43,12 +48,14 @@ function Game() {
       var klocek = (new Klocek()).getKlocek();
       main.scene.add(klocek)
       klocek.position.set(x * 50, y * 30, z * 50)
-      klocek.name = `block_${x}_${z}`
+      klocek.name = `block_${x}_${z}_${y}`
 
       this.currentBlock = klocek;
       this.currentBlock.userData.countAddedX = 1;
       this.currentBlock.userData.countAddedZ = 1;
-      // this.currentBlock.userData.countAddedY = 1;
+      // TODO Figure out this one. Reason its here is that I want additional blocks to be added starting from clicked block,
+      // not from plane (board) 
+      this.currentBlock.userData.countAddedY = y;
       // if (y > 0) {
       //   //   this.currentBlock.userData.countAddedY++;
 
@@ -82,16 +89,20 @@ function Game() {
 
   // Every new subblock adds to block object3d container 
   this.changeBlockSize = function(direction) {
-    console.log(this.currentBlock)
+    console.log(this.currentBlock.userData)
 
     if (direction == "x") {
       for (let i = 0; i < this.currentBlock.userData.countAddedZ; i++) {
         // var additionalBlocks = [];
-
         let additionalOne = (new Klocek).getKlocek()
-          // additionalBlocks.push();
+
+        additionalOne.name = `subBlock_${this.currentBlock.userData.countAddedX}_${i}_${this.currentBlock.userData.countAddedY}`
+        additionalOne.userData.countAddedY = 1;
+        // additionalBlocks.push();
         additionalOne.position.set(this.currentBlock.userData.countAddedX * 50, 0, i * 50)
         this.currentBlock.add(additionalOne)
+          // console.log("adding block with y coordinats:", this.currentBlock.userData.countAddedY)
+
 
       }
       //   additionalBlock.position.set(this.currentBlock.userData.countAddedX * 50, 0, 0)
@@ -102,9 +113,12 @@ function Game() {
         // var additionalBlocks = [];
 
         let additionalOne = (new Klocek).getKlocek()
-          // additionalBlocks.push();
+        additionalOne.name = `subBlock_${i}_${this.currentBlock.userData.countAddedZ}_${this.currentBlock.userData.countAddedY}`
+        additionalOne.userData.countAddedY = 1;
+        // additionalBlocks.push();
         additionalOne.position.set(i * 50, 0, this.currentBlock.userData.countAddedZ * 50)
         this.currentBlock.add(additionalOne)
+          // console.log("adding block with y coordinats:", this.currentBlock.userData.countAddedY)
 
       }
       //   additionalBlock.position.set(this.currentBlock.userData.countAddedX * 50, 0, 0)

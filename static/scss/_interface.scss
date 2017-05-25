@@ -1,0 +1,82 @@
+@font-face {
+    font-family: "FontAwesome";
+    src: url("../assets/FontAwesome.woff2");
+}
+
+.interface-block {
+    position: absolute;
+    z-index: 2;
+    padding: 1% 2%;
+    background: #003953;
+    // border: 1px solid white;
+    border-radius: 3px;
+    color: white;
+    text-align: center;
+}
+
+.help-container {
+    @extend .interface-block;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    // override background
+    background: transparent;
+}
+
+// TODO: Use fontAwesome arrows instead of text
+.help {
+    // width: 90%;
+    // text-align: center;
+    width: 100%;
+    // margin-top: 0.8em;
+    // font-family: Lato;
+    border: none;
+    // font-family: "FontAwesome", "Lato Light";
+    // cursor: pointer;
+    // font-size: 1.5em;
+    // -webkit-appearance: none; // Zeruje domyslny styl input type=button w Safari na iph
+    // -webkit-border-radius: 0;
+}
+
+.user-info-container {
+    @extend .interface-block;
+    top: 3%;
+    right: 2%;
+}
+
+.user-info {
+    &__log-out {
+        color: green;
+        width: 90%;
+        // text-align: center;
+        width: 100%;
+        margin-top: 0.8em;
+        padding: 2% 6% 2% 6%;
+        color: black;
+        font-family: Lato;
+        border: none;
+        background: #fff;
+        cursor: pointer;
+        // font-size: 1.5em;
+        -webkit-appearance: none; // Zeruje domyslny styl input type=button w Safari na iph
+        -webkit-border-radius: 0;
+    }
+}
+
+.buildings-container {
+    @extend .interface-block;
+    left: 2%;
+    top: 3%;
+    // width: ;
+    // height: 94%;
+    .buildings {
+        &__header {
+            font-size: 2em;
+            text-transform: uppercase;
+        }
+        >div {
+            font-size: 1.6em;
+            margin: 1em 0;
+        }
+    }
+}
