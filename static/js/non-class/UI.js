@@ -14,11 +14,11 @@ let UI = {
   getUserCredientals: function() {
     let login = UI.nodes.login.value;
     let password = UI.nodes.password.value;
-    console.log(login, password)
     let data = {
       name: login,
       password: password
     }
+    console.log(data)
     return data;
   },
 
@@ -38,7 +38,6 @@ let UI = {
   registerOperations: function() {
 
 
-    console.log("register")
     let data = UI.getUserCredientals();
     network.register(data)
 

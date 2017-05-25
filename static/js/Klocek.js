@@ -81,10 +81,10 @@ function Klocek() {
 
 
     // Just a HELPER
-    var edges = new THREE.EdgesHelper(cube, 0xffffff);
-    edges.material.linewidth = 2;
-    edges.position.set(0, 15, 0)
-    container.add(edges);
+    // var edges = new THREE.EdgesHelper(cube, 0xffffff);
+    // edges.material.linewidth = 2;
+    // edges.position.set(0, 15, 0)
+    // container.add(edges);
 
 
 
@@ -103,11 +103,14 @@ function Klocek() {
   // czyli nasze światło wraz z bryłą
 
   this.getKlocek = function() {
+    // console.log(container)
+    container.children[0].name = "subBlock_0_0_0"
+    container.children[0].userData.countAddedY = 1;
     return container;
   }
 
-  this.getFirstBlock = function() {
-    return (new THREE.Object3D).add(container);
+  this.getSingleBlock = function() {
+    return singleMesh;
   }
 
   // inne funkcje publiczne, np zmiana koloru bryły, zmiana koloru światła

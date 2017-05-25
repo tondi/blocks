@@ -69,36 +69,42 @@ function Main() {
       // console.log(intersects);
 
       // changed to parent
-      var mesh = intersects[0].object.parent;
-      var name = intersects[0].object.parent.name;
-      console.log("kliknieto", mesh)
+      var mesh = intersects[0].object;
+      var name = intersects[0].object.name;
+      // console.log("name:", name)
+      // console.log("mesh: ", mesh)
 
-      var arr = name.split("_")
-      var obj = arr[0];
-      // console.log(obj);
+
+      var arr = mesh.parent.name.split("_")
+        // var obj = mesh.parent.name.split("_")[0];
+      var obj = arr[0]
+        // console.log("obj: ", obj);
+
       var x = Number(arr[1]);
       var z = Number(arr[2]);
       var y = Number(arr[3]);
       if (obj == "plane") {
         game.addBlock(x, 0, z)
       }
-      // DONE
-      if (obj == "block") {
-        // console.log(mesh)
-        game.addBlock(x, mesh.userData.countAddedY + 1, z)
-        mesh.userData.countAddedY++;
-        // console.log(intersects[0].object.parent.userData.countAddedY)
-      }
-      if (obj == "subBlock") {
-        // console.log(mesh)
-        // console.log(mesh.parent.name)
-        console.log(Number(mesh.parent.name.split("_")[1]) + x, mesh.userData.countAddedY + y, Number(mesh.parent.name.split("_")[2]) + z)
-          // TODO
-        game.addBlock(Number(mesh.parent.name.split("_")[1]) + x, mesh.userData.countAddedY + y, Number(mesh.parent.name.split("_")[2]) + z)
+      if (name.split("_")[0] == "subBlock") {
+        // console.log("mesh.userData.countAddedY", mesh.userData.countAddedY, "y: ", y)
+        // console.log(Number(mesh.name.split("_")[1]) + x, mesh.userData.countAddedY + y, Number(mesh.name.split("_")[2]) + z)
+        // TODO
+        game.addBlock(Number(mesh.name.split("_")[1]) + x, mesh.userData.countAddedY + y, Number(mesh.name.split("_")[2]) + z)
           // console.log("mesh userdata count y", mesh.userData.countAddedY, "y", y)
         mesh.userData.countAddedY++;
         // console.log(intersects[0].object.parent.userData.countAddedY)
       }
+      // Deleted after refactoring. Now it's recognized depending on subblock. 
+      //  else {
+
+      //   if (obj == "block") {
+      //     // console.log(mesh)
+      //     game.addBlock(x, mesh.userData.countAddedY + 1, z)
+      //     mesh.userData.countAddedY++;
+      //     // console.log(intersects[0].object.parent.userData.countAddedY)
+      //   }
+      // }
 
     }
 

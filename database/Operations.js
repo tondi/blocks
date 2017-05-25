@@ -5,6 +5,11 @@ module.exports = function() {
     // wstawienie jednego "rekordu" do dokumentu - INSERT
 
     AddUser: function(Model, data, cb) {
+      // TODO: Size of collections
+      // Model.collection.stats(function(err, results) {
+      //   console.log(results.storageSize);
+      // });
+
       let any = new RegExp(".");
       // In our case rejection is success "User with this name was not found we can add it"
       opers.ValidateUser(Model, data.name, any).catch((resp) => {

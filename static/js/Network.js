@@ -35,24 +35,56 @@ function Network() {
     //     console.log(value)
     //   }
     // }
-    var buildings = main.scene.children.filter(e => {
+    let project = {
+      buildings: [],
+      date: (new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString()
+    }
+
+    let buildings = main.scene.children.filter(e => {
       return e.name.split("_")[0] == "block"
     })
-
     console.log(buildings)
 
+    for (let value of buildings) {
 
-    socket.emit("project/save", game.buildings)
+      // project.buildings.push(value.name)
+
+      // if (value.children.length > 1) {
+      //   project.buildings[value..length - 1]
+      // }
+
+      for (let value of buildings) {
+        let data = {
+          name: value.name,
+          rotation: value.userData.rotation,
+          color: value.userData.color,
+          children: []
+        }
+
+        for (let child of value.children) {
+          data.children.push(child.name)
+
+        }
+        project.buildings.push(data)
+      }
+
+    }
+
+    console.log(project)
+
+
+    socket.emit("project/save", project)
 
   }
   socket.on("project/save", data => {
     // game.addLegacyBlock(data)
     console.log(data)
+    UI.showInfo(data.text)
   })
 
   socket.on("user/projects", data => {
     // game.addLegacyBlock(data)
-    console.log("Projekty:", data)
+    console.log("Saved projects:", data)
   })
 
   // TODO: Here start adding to local var, then when save buildings called send them to server
@@ -194,7 +226,6 @@ function Network() {
   socket.on("user/login", data => {
     UI.showInfo(data.text)
     if (data.success == true) {
-      console.log("success logging! :)")
       UI.nodes.loggedAs.innerHTML = data.name;
       game.buildingAllowed = true;
       UI.nodes.loginContainer.classList.remove("visible")

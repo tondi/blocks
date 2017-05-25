@@ -42,7 +42,7 @@ function Game() {
   // DIFFRENT THAN ADD LEGACY
   // Changed name | added z
   this.addBlock = function addBlock(x = 0, y = 0, z = 0) {
-
+    // console.log(this.currentBlock)
     if (this.buildingAllowed) {
 
       var klocek = (new Klocek()).getKlocek();
@@ -55,7 +55,8 @@ function Game() {
       this.currentBlock.userData.countAddedZ = 1;
       // TODO Figure out this one. Reason its here is that I want additional blocks to be added starting from clicked block,
       // not from plane (board) 
-      this.currentBlock.userData.countAddedY = y;
+      this.currentBlock.userData.countAddedY = 1;
+      this.currentBlock.userData.rotation = 0;
       // if (y > 0) {
       //   //   this.currentBlock.userData.countAddedY++;
 
@@ -83,18 +84,21 @@ function Game() {
       }
     })
 
+    console.log(color)
+    this.currentBlock.userData.color = color;
+
     // socket
     network.changeBlockColor(color);
   }
 
   // Every new subblock adds to block object3d container 
   this.changeBlockSize = function(direction) {
-    console.log(this.currentBlock.userData)
+    console.log(this.currentBlock)
 
     if (direction == "x") {
       for (let i = 0; i < this.currentBlock.userData.countAddedZ; i++) {
         // var additionalBlocks = [];
-        let additionalOne = (new Klocek).getKlocek()
+        let additionalOne = (new Klocek).getSingleBlock()
 
         additionalOne.name = `subBlock_${this.currentBlock.userData.countAddedX}_${i}_${this.currentBlock.userData.countAddedY}`
         additionalOne.userData.countAddedY = 1;
@@ -112,7 +116,7 @@ function Game() {
       for (let i = 0; i < this.currentBlock.userData.countAddedX; i++) {
         // var additionalBlocks = [];
 
-        let additionalOne = (new Klocek).getKlocek()
+        let additionalOne = (new Klocek).getSingleBlock()
         additionalOne.name = `subBlock_${i}_${this.currentBlock.userData.countAddedZ}_${this.currentBlock.userData.countAddedY}`
         additionalOne.userData.countAddedY = 1;
         // additionalBlocks.push();
@@ -131,6 +135,7 @@ function Game() {
 
   this.changeBlockRotation = function(rad) {
     this.currentBlock.rotateY(rad)
+    this.currentBlock.userData.rotation += rad;
     network.changeBlockRotation(rad)
   }
 

@@ -22,9 +22,19 @@ module.exports = function(mongoose) {
     password: { type: String, required: true },
   });
 
+
+  // projects
+  var buildingShema = new Schema({
+    name: String,
+    rotation: Number,
+    color: Number,
+    children: [],
+  })
+
   var projectShema = new Schema({
     login: { type: String, required: true },
-    buildings: { type: [], required: true },
+    date: { type: String, required: true },
+    buildings: [buildingShema],
   });
 
 

@@ -236,8 +236,17 @@ io.on('connection', function(socket) {
 
     let project = new Models.Project({
       login: currentUser,
-      buildings: data
+      date: data.date,
+
     });
+
+    // Nice! <3 MongoDB
+    for (let i in data.buildings) {
+      project.buildings.push(data.buildings[i])
+      for (let inner of data.buildings[i].children) {
+        project.buildings[i].children.push(inner)
+      }
+    }
 
     project.validate(function(err) {
       console.log("err:", err);
