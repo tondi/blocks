@@ -44,7 +44,7 @@ function connectToMongo() {
 
 connectToMongo();
 
-// delet old users on start 
+// delet old users on start
 opers.DeleteAll(Models.User)
 
 // Create admin on start
@@ -67,6 +67,7 @@ createAdmin();
 
 io.on('connection', function(socket) {
   console.log('a user connected');
+  // console.log("CURRENT ID connection: ", socket.id)
 
   // REGISTER
   socket.on("user/register", data => {
@@ -92,16 +93,72 @@ io.on('connection', function(socket) {
   // LOGGING
   socket.on("user/login", userData => {
     console.log("login data: ", userData)
+    console.log("obecnie zalogowani uzytwkonicy: ", loggedUsers)
 
-    // console.log(loggedUsers)
-    if (!loggedUsers.includes(userData.name)) {
-      opers.ValidateUser(Models.User, userData.name, userData.password).then(data => {
+    // console.log("loggedusers", loggedUsers)
+    // TODO Figure if below can be written easier with that if below
+    var userAlreadyLogged = false;
+    for (let value of loggedUsers) {
+      if (value.name == userData.name) {
+        userAlreadyLogged = true;
+      }
+    }
+    console.log("user is already logged:", userAlreadyLogged)
+    if (!userAlreadyLogged /*!loggedUsers.includes(userData.name)*/ ) {
+      opers.ValidateUser(Models.User, userData.name, userData.password)
+        .then(data => {
         console.log(data)
-        io.sockets.to(socket.id).emit("user/login", data);
 
         // Set the user that builds
         currentUser = userData.name;
-        loggedUsers.push(userData.name)
+        let loggedUser = {
+          name: userData.name,
+          id: socket.id
+        }
+        loggedUsers.push(loggedUser)
+
+        // Send login inf
+        io.sockets.to(socket.id).emit("user/login", data);
+
+        console.log("obecnie zalogowani uzytwkonicy: ", loggedUsers)
+
+        if (loggedUser.name == "admin") {
+          let any = new RegExp(".");
+          opers.SelectUserProjects(Models.Project, any)
+            .then((response) => {
+            // FOR DEV
+            io.sockets.to(socket.id).emit("user/projects", response.data);
+
+            // Nice!
+            let users = {}
+            for (let value of response.data) {
+              users[value.login] = users[value.login] || [];
+              users[value.login].push(value)
+            }
+
+            // console.log(users)
+            io.sockets.to(socket.id).emit("user/users", users);
+
+
+          }).catch(response => {
+            console.log("ADMIN: Nie udalo sie znalezc projektow", response)
+            io.sockets.to(socket.id).emit("user/projects", response);
+
+          })
+        } else {
+          // send users buildings
+          opers.SelectUserProjects(Models.Project, currentUser)
+            .then((response) => {
+            console.log("udalo sie znalzezc projekty. RESPONSE:", response)
+            io.sockets.to(socket.id).emit("user/projects", response.data);
+
+          }).catch(response => {
+            console.log("Nie udalo sie znalezc projektow", response)
+            io.sockets.to(socket.id).emit("user/projects", response);
+
+          })
+
+        }
       }).catch(data => {
         console.log(data)
         io.sockets.to(socket.id).emit("user/login", data);
@@ -109,7 +166,7 @@ io.on('connection', function(socket) {
 
     } else {
       let data = {
-        succes: false,
+        success: false,
         text: "User is already logged"
       }
       io.sockets.to(socket.id).emit("user/login", data);
@@ -117,30 +174,119 @@ io.on('connection', function(socket) {
 
   })
 
+  socket.on("user/logout", data => {
+    console.log("logout id: ", socket.id)
+    console.log("logged users: ", loggedUsers);
 
-  // BUILDING
-  socket.on("block/add", data => {
-    console.log(data)
-    socket.broadcast.emit("block/add", data)
-  })
-  socket.on("block/change-color", data => {
-    console.log(data)
-    socket.broadcast.emit("block/change-color", data)
+
+    let index;
+    for (let i in loggedUsers) {
+      if (loggedUsers[i].id == socket.id) {
+        index = i;
+      }
+    }
+    console.log("loggedUsers: ", loggedUsers, "index: ", index)
+    if (index !== -1) {
+      console.log("Usuwam usera o pozycji w loggedUsers", index)
+      loggedUsers.splice(index, 1)
+      let data = {
+        success: true,
+        text: "Successfully logged out"
+      }
+      io.sockets.to(socket.id).emit("user/logout", data);
+    }
+    console.log("obecnie zalogowani uzytwkonicy: ", loggedUsers)
+      // socket.broadcast.emit("block/add", data)
   })
 
-  socket.on("block/change-size", data => {
-    console.log(data)
-      // io.sockets.emit("block/change-size", data)
-    socket.broadcast.emit("block/change-size", data)
+
+  // BUILDINGs
+  // socket.on("block/add", data => {
+  //   console.log(data)
+  //   socket.broadcast.emit("block/add", data)
+  // })
+  // socket.on("block/change-color", data => {
+  //   console.log(data)
+  //   socket.broadcast.emit("block/change-color", data)
+  // })
+
+  // socket.on("block/change-size", data => {
+  //   console.log(data)
+  //     // io.sockets.emit("block/change-size", data)
+  //   socket.broadcast.emit("block/change-size", data)
+  // })
+
+  // socket.on("block/change-rotation", data => {
+  //   console.log(data)
+  //   socket.broadcast.emit("block/change-rotation", data)
+  // })
+
+  // save suer Project
+  socket.on("project/save", data => {
+    console.log("save : ", data)
+    console.log("user : ", currentUser)
+      // save in db
+
+    let project = new Models.Project({
+      login: currentUser,
+      date: data.date,
+
+    });
+
+    // Nice! <3 MongoDB
+    for (let i in data.buildings) {
+      project.buildings.push(data.buildings[i])
+      for (let inner of data.buildings[i].children) {
+        project.buildings[i].children.push(inner)
+      }
+    }
+
+    project.validate(function(err) {
+      console.log("err:", err);
+    });
+
+    opers.SaveProject(project).then((response) => {
+      console.log("after saving success:", response)
+      io.sockets.to(socket.id).emit("project/save", response);
+
+    }).catch((response) => {
+      console.log("after saving fail:", response)
+      io.sockets.to(socket.id).emit("project/save", response);
+
+    })
+
+    // comment this or not?
+    // socket.broadcast.emit("project/save", data)
   })
 
-  socket.on("block/change-rotation", data => {
-    console.log(data)
-    socket.broadcast.emit("block/change-rotation", data)
-  })
 
   socket.on("disconnect", function() {
     console.log("klient się rozłącza")
+
+    console.log("CURRENT ID: ", socket.id)
+
+    // Removing disconnecting user from loggedUsers []
+    let disconnectedUser;
+    for (let value of loggedUsers) {
+      if (value.id == socket.id) {
+        console.log("rozlaczyl sie user", value.name)
+        disconnectedUser = value.name;
+      }
+    }
+    let index;
+    // let index = loggedUsers.indexOf(disconnectedUser);
+    for (let i in loggedUsers) {
+      if (loggedUsers[i].name == disconnectedUser) {
+        index = i;
+      }
+    }
+    console.log("loggedUsers: ", loggedUsers, "index: ", index)
+    if (index !== -1) {
+      console.log("Usuwam usera o pozycji w loggedUsers", index)
+      loggedUsers.splice(index, 1)
+
+    }
+    console.log("obecnie zalogowani uzytwkonicy: ", loggedUsers)
   })
 });
 

@@ -6,12 +6,26 @@ body {
   overflow: hidden;
   font-family: Lato Light; }
 
+#main {
+  cursor: pointer; }
+  #main canvas {
+    pointer-events: none; }
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box; }
+
 .visible {
-  opacity: 1; }
+  opacity: 1;
+  animation: none;
+  z-index: initial;
+  transition: z-index 0.5s step-start, opacity 0.5s; }
 
 .hidden {
   opacity: 0;
-  z-index: -1 !important; }
+  z-index: -1 !important;
+  transition: z-index 0.5s step-end, opacity 0.5s; }
 
 @font-face {
   font-family: "FontAwesome";
@@ -32,7 +46,6 @@ body {
   flex-direction: column;
   color: white;
   position: absolute;
-  transition: 0.5s;
   z-index: 3; }
 
 .login {
@@ -116,26 +129,125 @@ body {
   left: 50%;
   transform: translateX(-50%);
   top: 10%;
-  z-index: 4; }
+  z-index: 4;
+  text-align: center; }
   .info-container .info {
     font-size: 2em;
     color: white;
     transition: 1s; }
 
-.buildings-container {
+@font-face {
+  font-family: "FontAwesome";
+  src: url("../assets/FontAwesome.woff2"); }
+
+.interface-block, .help-container, .user-info-container, .buildings-container {
   position: absolute;
   z-index: 2;
-  right: 2%;
-  top: 3%;
   padding: 1% 2%;
   background: #003953;
   border-radius: 3px;
-  color: white; }
-  .buildings-container .buildings {
-    text-align: center; }
-    .buildings-container .buildings__header {
-      font-size: 2em;
-      text-transform: uppercase; }
-    .buildings-container .buildings > div {
-      font-size: 1.6em;
-      margin: 1em 0; }
+  color: white;
+  text-align: center; }
+
+.help-container {
+  bottom: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: transparent; }
+
+.help {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 100%;
+  border: none; }
+
+.user-info-container {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  top: 3%;
+  right: 2%;
+  min-width: 10%; }
+
+.button, .user-info__log-out {
+  width: 100%;
+  margin-top: 0.8em;
+  padding: 2% 6% 2% 6%;
+  color: black;
+  font-family: Lato;
+  border: none;
+  background: #fff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0; }
+
+.user-info__log-out {
+  transition: transform 0.2s; }
+  .user-info__log-out:hover {
+    transform: scale(1.1); }
+
+.buildings-container {
+  left: 2%;
+  top: 3%;
+  min-width: 17%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 0.5% 1em; }
+  .buildings-container .buildings__header {
+    font-size: 1.6em;
+    text-transform: uppercase;
+    margin: 0.5em 0; }
+  .buildings-container .buildings__list {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column; }
+  .buildings-container .buildings__user, .buildings-container .buildings__project {
+    margin: 0.5em 0.5em;
+    font-size: 1rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    cursor: pointer;
+    -ms-flex: 1 0 3em;
+    flex: 1 0 3em;
+    transition: transform 0.2s; }
+    .buildings-container .buildings__user__image, .buildings-container .buildings__project__image {
+      -ms-flex: 1;
+      flex: 1;
+      position: relative; }
+      .buildings-container .buildings__user__image::before, .buildings-container .buildings__project__image::before {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 3em; }
+    .buildings-container .buildings__user__text, .buildings-container .buildings__project__text {
+      transform: translateX(1em);
+      -ms-flex: 4;
+      flex: 4;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      text-align: left;
+      -ms-flex-pack: center;
+      justify-content: center; }
+    .buildings-container .buildings__user:hover, .buildings-container .buildings__project:hover {
+      transform: scale(1.1); }
+  .buildings-container .buildings__save {
+    margin: 0.5em 0.5em;
+    font-size: 1.1rem;
+    cursor: pointer;
+    -ms-flex: 1 0 3em;
+    flex: 1 0 3em;
+    font-family: Lato;
+    transition: transform 0.2s; }
+    .buildings-container .buildings__save:hover {
+      transform: scale(1.1); }

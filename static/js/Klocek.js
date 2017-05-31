@@ -7,11 +7,12 @@ function Klocek() {
 
   // kontener
   var container = new THREE.Object3D();
+  var singleMesh;
 
   // init
   function init() {
 
-    material = new THREE.MeshBasicMaterial({
+    material = new THREE.MeshLambertMaterial({
       color: 0xff6600,
       // there was more
       //   depthWrite: false
@@ -37,7 +38,7 @@ function Klocek() {
     // light = new THREE.PointLight(0xff6600, 1, 500, 2);
 
     var cylinderGeometry = new THREE.CylinderGeometry(7.5, 7.5, 5, 32);
-    var cylinderMaterial = new THREE.MeshBasicMaterial({
+    var cylinderMaterial = new THREE.MeshLambertMaterial({
       color: 0x2233aa,
     });
 
@@ -80,15 +81,16 @@ function Klocek() {
 
 
     // Just a HELPER
-    var edges = new THREE.EdgesHelper(cube, 0xffffff);
-    edges.material.linewidth = 2;
-    edges.position.set(0, 15, 0)
-    container.add(edges);
+    // var edges = new THREE.EdgesHelper(cube, 0xffffff);
+    // edges.material.linewidth = 2;
+    // edges.position.set(0, 15, 0)
+    // container.add(edges);
 
 
 
-    var singleMesh = new THREE.Mesh(singleGeometry, cylinderMaterial);
-
+    singleMesh = new THREE.Mesh(singleGeometry, cylinderMaterial);
+    // for dev
+    // singleMesh.add(edges)
 
     container.add(singleMesh)
       // container.add(cylinder)
@@ -101,7 +103,14 @@ function Klocek() {
   // czyli nasze światło wraz z bryłą
 
   this.getKlocek = function() {
+    // console.log(container)
+    container.children[0].name = "subBlock_0_0_0"
+    container.children[0].userData.countAddedY = 1;
     return container;
+  }
+
+  this.getSingleBlock = function() {
+    return singleMesh;
   }
 
   // inne funkcje publiczne, np zmiana koloru bryły, zmiana koloru światła

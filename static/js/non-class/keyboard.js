@@ -70,7 +70,7 @@ document.addEventListener("keyup", remove)
 
 // used by shift
 function afterShiftClick(e) {
-  console.log("shift +", e.key)
+  // console.log("shift +", e.key)
   switch (e.key) {
     case "ArrowLeft":
       {

@@ -5,8 +5,13 @@ module.exports = function() {
     // wstawienie jednego "rekordu" do dokumentu - INSERT
 
     AddUser: function(Model, data, cb) {
+      // TODO: Size of collections
+      // Model.collection.stats(function(err, results) {
+      //   console.log(results.storageSize);
+      // });
+
       let any = new RegExp(".");
-      // In our case rejection is succes "User with this name was not found we can add it"
+      // In our case rejection is success "User with this name was not found we can add it"
       opers.ValidateUser(Model, data.name, any).catch((resp) => {
         console.log("resp:", resp)
 
@@ -15,7 +20,7 @@ module.exports = function() {
           console.log("added " + data)
           if (error) {
             let response = {
-              succes: false,
+              success: false,
               text: "Błąd rejestracji użytkownika"
             }
             cb(response);
@@ -23,7 +28,7 @@ module.exports = function() {
 
           }
           let response = {
-            succes: true,
+            success: true,
             text: "Zarejestrowano"
           }
           cb(response)
@@ -31,7 +36,7 @@ module.exports = function() {
         })
       }).then((data) => {
 
-        cb({ succes: false, text: "User already exists" })
+        cb({ success: false, text: "User already exists" })
         console.log("user already exists")
       })
 
@@ -49,14 +54,16 @@ module.exports = function() {
           console.log(data);
           if (data.length) {
             let response = {
-              succes: true,
-              text: "Succesfuly logged in"
+              success: true,
+              text: "Successfuly logged in",
+              name: name
             }
             resolve(response);
           } else {
             let response = {
-              succes: false,
-              text: "User does not exist or password invalid"
+              success: false,
+              text: "User does not exist or password invalid",
+              name: name
             }
             reject(response)
           }
@@ -67,6 +74,57 @@ module.exports = function() {
 
     // pobranie wszystkich "rekordów" z dokumentu - SELECT
     // zwracamy uwagę na argument Model
+
+    SaveProject: function(data) {
+      return new Promise((resolve, reject) => {
+        data.save(function(error, data, dodanych) {
+          console.log("added " + data)
+            // console.log(error)
+          if (error) {
+            let response = {
+              success: false,
+              text: "Błąd dodawania projektu"
+            }
+            reject(response);
+            // return console.error(error);
+          }
+          let response = {
+            success: true,
+            text: "Zapisano projekt"
+          }
+          resolve(response)
+
+        })
+      })
+
+    },
+
+    SelectUserProjects: function(Model, name) {
+      return new Promise((resolve, reject) => {
+        Model.find({ login: name }, function(err, data) {
+          if (err) {
+            reject(err);
+          }
+          // console.log(data);
+          if (data.length) {
+            let response = {
+              success: true,
+              text: "User projects found",
+              data: data
+            }
+            resolve(response);
+          } else {
+            let response = {
+              success: false,
+              text: "User does not have projects"
+            }
+            reject(response)
+          }
+
+        }); //.limit(1)
+      })
+    },
+
 
     SelectAll: function(Model, callback) {
       Model.find({}, function test(err, data) {

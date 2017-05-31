@@ -22,9 +22,19 @@ module.exports = function(mongoose) {
     password: { type: String, required: true },
   });
 
+
+  // projects
   var buildingShema = new Schema({
+    name: String,
+    rotation: Number,
+    color: Number,
+    children: [],
+  })
+
+  var projectShema = new Schema({
     login: { type: String, required: true },
-    building: { type: [], required: true },
+    date: { type: String, required: true },
+    buildings: [buildingShema],
   });
 
 
@@ -36,7 +46,8 @@ module.exports = function(mongoose) {
     // Podatnik: mongoose.model("Podatnik", podatnikSchema),
     // Kierowca: mongoose.model("Kierowca", kierowcaSchema) , 
     // Inny: mongoose.model("Inny", innySchema) ,   
-    User: mongoose.model("User", userShema)
+    User: mongoose.model("User", userShema),
+    Project: mongoose.model("Project", projectShema)
   }
 
   return models;

@@ -5,7 +5,7 @@ function Main() {
   scene = new THREE.Scene();
 
   // camera = new THREE.OrthographicCamera(
-  //   window.innerWidth / -2,
+//   window.innerWidth / -2,
   //   window.innerWidth / 2,
   //   window.innerHeight / 2,
   //   window.innerHeight / -2,
@@ -25,7 +25,7 @@ function Main() {
   camera.lookAt(new THREE.Vector3(350, 0, 350));
   // console.log(scene.position)
 
-  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setClearColor(0x000000);
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -35,7 +35,7 @@ function Main() {
   // renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   // RAYCASTER
-  var findIntersections = function(event) {
+  var findIntersections = function (event) {
     var raycaster = new THREE.Raycaster(); // obiekt symulujący "rzucanie" promieni
     var mouseVector = new THREE.Vector2() // wektor (x,y) wykorzystany będzie do określenie pozycji myszy na ekranie
 
@@ -69,29 +69,48 @@ function Main() {
       // console.log(intersects);
 
       // changed to parent
-      var name = intersects[0].object.parent.name;
+      var mesh = intersects[0].object;
+      var name = intersects[0].object.name;
+      // console.log("name:", name)
+      // console.log("mesh: ", mesh)
 
-      var arr = name.split("_")
-      var obj = arr[0];
-      // console.log(obj);
-      var x = arr[1];
-      var z = arr[2];
+
+      var arr = mesh.parent.name.split("_")
+      // var obj = mesh.parent.name.split("_")[0];
+      var obj = arr[0]
+      // console.log("obj: ", obj);
+
+      var x = Number(arr[1]);
+      var z = Number(arr[2]);
+      var y = Number(arr[3]);
       if (obj == "plane") {
         game.addBlock(x, 0, z)
       }
-      // TODO Figure out how to stack blocks
-      // 1. In original lego there are no 2 level height blopcks, so I want it too
-      if (obj == "block") {
-        game.addBlock(x, 1, z)
-        intersects[0].object.parent.countAddedY++;
+      if (name.split("_")[0] == "subBlock") {
+        // console.log("mesh.userData.countAddedY", mesh.userData.countAddedY, "y: ", y)
+        // console.log(Number(mesh.name.split("_")[1]) + x, mesh.userData.countAddedY + y, Number(mesh.name.split("_")[2]) + z)
+        // TODO
+        game.addBlock(Number(mesh.name.split("_")[1]) + x, mesh.userData.countAddedY + y, Number(mesh.name.split("_")[2]) + z)
+        // console.log("mesh userdata count y", mesh.userData.countAddedY, "y", y)
+        mesh.userData.countAddedY++;
+        // console.log(intersects[0].object.parent.userData.countAddedY)
       }
+      // Deleted after refactoring. Now it's recognized depending on subblock. 
+      //  else {
+
+      //   if (obj == "block") {
+      //     // console.log(mesh)
+      //     game.addBlock(x, mesh.userData.countAddedY + 1, z)
+      //     mesh.userData.countAddedY++;
+      //     // console.log(intersects[0].object.parent.userData.countAddedY)
+      //   }
+      // }
 
     }
 
     ///////////// OBSŁUGA PRZEMIESZCZANIA SWIATEŁ
   }
   document.addEventListener("mousedown", findIntersections, false);
-
 
 
   // LINIE POMOCNICZE
@@ -129,29 +148,29 @@ function Main() {
 
     }
     if (keyboard.arrow.up) {
-      camera.position.y += 5;
+      camera.position.y += 20;
       camera.lookAt(game.center)
 
     } else if (keyboard.arrow.down) {
-      camera.position.y -= 5;
+      camera.position.y -= 15;
       camera.lookAt(game.center)
 
     }
     // TODO set center of camera rotation ?? Now it rotates over 0
     if (keyboard.arrow.left) {
       // camera.position.x += 5;
-      keyboard.arrow.angle += 2;
+      keyboard.arrow.angle += 4;
       // 350 is the center of a board both in x and z
       camera.position.x = Math.cos(Math.PI / 180 * keyboard.arrow.angle) * 1000 + 350
       camera.position.z = Math.sin(Math.PI / 180 * keyboard.arrow.angle) * 1000 + 350
       camera.lookAt(game.center)
 
     } else if (keyboard.arrow.right) {
-      keyboard.arrow.angle -= 2;
+      keyboard.arrow.angle -= 4;
       camera.position.x = Math.cos(Math.PI / 180 * keyboard.arrow.angle) * 1000 + 350
       camera.position.z = Math.sin(Math.PI / 180 * keyboard.arrow.angle) * 1000 + 350
       camera.lookAt(game.center)
-        // console.log(game.arrow.angle)
+      // console.log(game.arrow.angle)
     }
 
 
@@ -161,9 +180,11 @@ function Main() {
     camera.updateProjectionMatrix();
 
     // Working with surface pro 2 now
-    // setTimeout(() => {
-    requestAnimationFrame(animateScene);
-    // }, 1000 / 5)
+    setTimeout(() => {
+        requestAnimationFrame(animateScene);
+      },
+      1000 / 3
+    )
 
 
   }())
