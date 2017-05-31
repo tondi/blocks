@@ -180,11 +180,10 @@ function Main() {
     camera.updateProjectionMatrix();
 
     // Working with surface pro 2 now
-    setTimeout(() => {
+    // setTimeout(() => {
         requestAnimationFrame(animateScene);
-      },
-      1000 / 3
-    )
+      // }
+      // ,1000 / 3)
 
 
   }())

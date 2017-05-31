@@ -190,12 +190,13 @@ function Network() {
   })
 
   // for development
-  this.login({name: "admin", password: "admin"})
+  // this.login({name: "admin", password: "admin"})
 
   socket.on("user/login", data => {
     UI.showInfo(data.text)
     console.log(data)
     if (data.success == true) {
+      game.clearScene();
       UI.nodes.loggedAs.innerHTML = data.name;
       game.buildingAllowed = true;
       UI.nodes.loginContainer.classList.remove("visible")

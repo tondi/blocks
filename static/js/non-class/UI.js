@@ -79,8 +79,6 @@ let UI = {
   },
   showProjects(data /* data is [] and contains projects*/) {
 
-    console.log("projects:", data)
-
     UI.nodes.buildingsHeader.innerHTML = "Projects";
 
     // if previously viewed
@@ -185,6 +183,20 @@ let UI = {
     registerBt.className = "login-bt"
   }
 }
+
+UI.nodes.login.addEventListener("keydown", (e) => {
+  if(e.keyCode == 13){
+    let data = UI.getUserCredientals();
+    network.login(data);
+  }
+})
+
+UI.nodes.password.addEventListener("keydown", (e) => {
+  if(e.keyCode == 13){
+    let data = UI.getUserCredientals();
+    network.login(data);
+  }
+})
 
 
 document.querySelector(".register").addEventListener("mousedown", () => {
