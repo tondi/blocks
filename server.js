@@ -44,7 +44,7 @@ function connectToMongo() {
 
 connectToMongo();
 
-// delet old users on start 
+// delet old users on start
 opers.DeleteAll(Models.User)
 
 // Create admin on start
@@ -105,7 +105,8 @@ io.on('connection', function(socket) {
     }
     console.log("user is already logged:", userAlreadyLogged)
     if (!userAlreadyLogged /*!loggedUsers.includes(userData.name)*/ ) {
-      opers.ValidateUser(Models.User, userData.name, userData.password).then(data => {
+      opers.ValidateUser(Models.User, userData.name, userData.password)
+        .then(data => {
         console.log(data)
 
         // Set the user that builds
@@ -123,7 +124,8 @@ io.on('connection', function(socket) {
 
         if (loggedUser.name == "admin") {
           let any = new RegExp(".");
-          opers.SelectUserProjects(Models.Project, any).then((response) => {
+          opers.SelectUserProjects(Models.Project, any)
+            .then((response) => {
             // FOR DEV
             io.sockets.to(socket.id).emit("user/projects", response.data);
 
@@ -145,7 +147,8 @@ io.on('connection', function(socket) {
           })
         } else {
           // send users buildings
-          opers.SelectUserProjects(Models.Project, currentUser).then((response) => {
+          opers.SelectUserProjects(Models.Project, currentUser)
+            .then((response) => {
             console.log("udalo sie znalzezc projekty. RESPONSE:", response)
             io.sockets.to(socket.id).emit("user/projects", response.data);
 

@@ -1,33 +1,37 @@
 body {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    font-family: Lato Light;
+	width: 100vw;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	font-family: Lato Light;
 }
 
 #main {
-    cursor: pointer;
+	cursor: pointer;
+	// Prevents from seleciton when adding blocks
+	canvas {
+		pointer-events: none;
+	}
 }
 
 // Some kind of zeroing
 *,
 *:before,
 *:after {
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .visible {
-    opacity: 1;
-    animation: none;
-    z-index: initial;
-    transition: z-index 0.5s step-start, opacity 0.5s;
+	opacity: 1;
+	animation: none;
+	z-index: initial;
+	transition: z-index 0.5s step-start, opacity 0.5s;
 }
 
 .hidden {
-    opacity: 0;
-    // for development Needs testing
-    z-index: -1 !important;
-    transition: z-index 0.5s step-end, opacity 0.5s;
+	opacity: 0;
+	// for development Needs testing
+	z-index: -1 !important;
+	transition: z-index 0.5s step-end, opacity 0.5s;
 }

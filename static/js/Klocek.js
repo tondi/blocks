@@ -12,7 +12,7 @@ function Klocek() {
   // init
   function init() {
 
-    material = new THREE.MeshBasicMaterial({
+    material = new THREE.MeshLambertMaterial({
       color: 0xff6600,
       // there was more
       //   depthWrite: false
@@ -38,7 +38,7 @@ function Klocek() {
     // light = new THREE.PointLight(0xff6600, 1, 500, 2);
 
     var cylinderGeometry = new THREE.CylinderGeometry(7.5, 7.5, 5, 32);
-    var cylinderMaterial = new THREE.MeshBasicMaterial({
+    var cylinderMaterial = new THREE.MeshLambertMaterial({
       color: 0x2233aa,
     });
 

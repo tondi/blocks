@@ -5,7 +5,7 @@ function Main() {
   scene = new THREE.Scene();
 
   // camera = new THREE.OrthographicCamera(
-  //   window.innerWidth / -2,
+//   window.innerWidth / -2,
   //   window.innerWidth / 2,
   //   window.innerHeight / 2,
   //   window.innerHeight / -2,
@@ -25,7 +25,7 @@ function Main() {
   camera.lookAt(new THREE.Vector3(350, 0, 350));
   // console.log(scene.position)
 
-  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setClearColor(0x000000);
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -35,7 +35,7 @@ function Main() {
   // renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   // RAYCASTER
-  var findIntersections = function(event) {
+  var findIntersections = function (event) {
     var raycaster = new THREE.Raycaster(); // obiekt symulujący "rzucanie" promieni
     var mouseVector = new THREE.Vector2() // wektor (x,y) wykorzystany będzie do określenie pozycji myszy na ekranie
 
@@ -76,9 +76,9 @@ function Main() {
 
 
       var arr = mesh.parent.name.split("_")
-        // var obj = mesh.parent.name.split("_")[0];
+      // var obj = mesh.parent.name.split("_")[0];
       var obj = arr[0]
-        // console.log("obj: ", obj);
+      // console.log("obj: ", obj);
 
       var x = Number(arr[1]);
       var z = Number(arr[2]);
@@ -91,7 +91,7 @@ function Main() {
         // console.log(Number(mesh.name.split("_")[1]) + x, mesh.userData.countAddedY + y, Number(mesh.name.split("_")[2]) + z)
         // TODO
         game.addBlock(Number(mesh.name.split("_")[1]) + x, mesh.userData.countAddedY + y, Number(mesh.name.split("_")[2]) + z)
-          // console.log("mesh userdata count y", mesh.userData.countAddedY, "y", y)
+        // console.log("mesh userdata count y", mesh.userData.countAddedY, "y", y)
         mesh.userData.countAddedY++;
         // console.log(intersects[0].object.parent.userData.countAddedY)
       }
@@ -111,7 +111,6 @@ function Main() {
     ///////////// OBSŁUGA PRZEMIESZCZANIA SWIATEŁ
   }
   document.addEventListener("mousedown", findIntersections, false);
-
 
 
   // LINIE POMOCNICZE
@@ -171,7 +170,7 @@ function Main() {
       camera.position.x = Math.cos(Math.PI / 180 * keyboard.arrow.angle) * 1000 + 350
       camera.position.z = Math.sin(Math.PI / 180 * keyboard.arrow.angle) * 1000 + 350
       camera.lookAt(game.center)
-        // console.log(game.arrow.angle)
+      // console.log(game.arrow.angle)
     }
 
 
@@ -182,8 +181,10 @@ function Main() {
 
     // Working with surface pro 2 now
     setTimeout(() => {
-      requestAnimationFrame(animateScene);
-    }, 1000 / 10)
+        requestAnimationFrame(animateScene);
+      },
+      1000 / 3
+    )
 
 
   }())
