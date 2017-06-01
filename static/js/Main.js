@@ -1,11 +1,10 @@
 function Main() {
 
-
   var scene, camera, renderer;
   scene = new THREE.Scene();
 
   // camera = new THREE.OrthographicCamera(
-//   window.innerWidth / -2,
+  //   window.innerWidth / -2,
   //   window.innerWidth / 2,
   //   window.innerHeight / 2,
   //   window.innerHeight / -2,
@@ -13,10 +12,10 @@ function Main() {
   //   10000);
 
   camera = new THREE.PerspectiveCamera(
-    60, // kąt patrzenia kamery (FOV - field of view)
-    window.innerWidth / window.innerHeight, // proporcje widoku, powinny odpowiadać proporjom naszego ekranu przeglądarki
-    0.1, // minimalna renderowana odległość
-    10000 // maxymalna renderowana odległość
+      60, // kąt patrzenia kamery (FOV - field of view)
+      window.innerWidth / window.innerHeight, // proporcje widoku, powinny odpowiadać proporjom naszego ekranu przeglądarki
+      0.1, // minimalna renderowana odległość
+      10000 // maxymalna renderowana odległość
   );
 
   camera.position.set(-300, 250, -300)
@@ -29,7 +28,7 @@ function Main() {
   renderer.setClearColor(0x000000);
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
-  document.getElementById("main").appendChild(renderer.domElement);
+  document.getElementById('main').appendChild(renderer.domElement);
 
   // renderer.shadowMapEnabled = true
   // renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -46,13 +45,12 @@ function Main() {
     mouseVector.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
 
-    // szukamy punktów wspólnych "promienia" i obiektu 3D 
+    // szukamy punktów wspólnych "promienia" i obiektu 3D
 
     raycaster.setFromCamera(mouseVector, camera);
 
     // intersects - tablica obiektów w które "trafia" nasz "promień" wysyłany z kamery
     // scene.children oznacza, że szukamy meshów bezpośrednio dodanych do sceny3D
-
 
     var intersects = raycaster.intersectObjects(scene.children);
 
@@ -74,8 +72,7 @@ function Main() {
       // console.log("name:", name)
       // console.log("mesh: ", mesh)
 
-
-      var arr = mesh.parent.name.split("_")
+      var arr = mesh.parent.name.split('_')
       // var obj = mesh.parent.name.split("_")[0];
       var obj = arr[0]
       // console.log("obj: ", obj);
@@ -83,19 +80,20 @@ function Main() {
       var x = Number(arr[1]);
       var z = Number(arr[2]);
       var y = Number(arr[3]);
-      if (obj == "plane") {
+      if (obj == 'plane') {
         game.addBlock(x, 0, z)
       }
-      if (name.split("_")[0] == "subBlock") {
+
+      if (name.split('_')[0] == 'subBlock') {
         // console.log("mesh.userData.countAddedY", mesh.userData.countAddedY, "y: ", y)
         // console.log(Number(mesh.name.split("_")[1]) + x, mesh.userData.countAddedY + y, Number(mesh.name.split("_")[2]) + z)
         // TODO
-        game.addBlock(Number(mesh.name.split("_")[1]) + x, mesh.userData.countAddedY + y, Number(mesh.name.split("_")[2]) + z)
+        game.addBlock(Number(mesh.name.split('_')[1]) + x, mesh.userData.countAddedY + y, Number(mesh.name.split('_')[2]) + z)
         // console.log("mesh userdata count y", mesh.userData.countAddedY, "y", y)
         mesh.userData.countAddedY++;
         // console.log(intersects[0].object.parent.userData.countAddedY)
       }
-      // Deleted after refactoring. Now it's recognized depending on subblock. 
+      // Deleted after refactoring. Now it's recognized depending on subblock.
       //  else {
 
       //   if (obj == "block") {
@@ -110,7 +108,8 @@ function Main() {
 
     ///////////// OBSŁUGA PRZEMIESZCZANIA SWIATEŁ
   }
-  document.addEventListener("mousedown", findIntersections, false);
+
+  document.addEventListener('mousedown', findIntersections, false);
 
 
   // LINIE POMOCNICZE
@@ -137,7 +136,6 @@ function Main() {
 
   (function animateScene() {
 
-
     if (initialCameraPos) {
 
       camera.position.x = Math.cos(Math.PI / 180 * keyboard.arrow.angle) * 1000 + 350
@@ -147,6 +145,7 @@ function Main() {
       initialCameraPos = false;
 
     }
+
     if (keyboard.arrow.up) {
       camera.position.y += 20;
       camera.lookAt(game.center)
@@ -156,7 +155,6 @@ function Main() {
       camera.lookAt(game.center)
 
     }
-    // TODO set center of camera rotation ?? Now it rotates over 0
     if (keyboard.arrow.left) {
       // camera.position.x += 5;
       keyboard.arrow.angle += 4;
@@ -173,18 +171,15 @@ function Main() {
       // console.log(game.arrow.angle)
     }
 
-
     renderer.render(scene, camera);
     //mesh.scale.set(1, 1, 1);
 
     camera.updateProjectionMatrix();
 
     // Working with surface pro 2 now
-    // setTimeout(() => {
-        requestAnimationFrame(animateScene);
-      // }
-      // ,1000 / 3)
-
+    setTimeout(() => {
+      requestAnimationFrame(animateScene);
+    }, 1000 / 3)
 
   }())
 

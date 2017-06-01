@@ -1,4 +1,4 @@
-// TODO 
+// TODO
 // remove unnecessary emits in changeBlocksize
 // building multi level with rotation on main block
 
@@ -7,6 +7,7 @@ function Game() {
   this.currentBlock = null;
   this.buildingAllowed = false;
   this.buildings = []
+  this.userName = "";
 
   function initBoard() {
 
@@ -92,7 +93,7 @@ function Game() {
     network.changeBlockColor(color);
   }
 
-  // Every new subblock adds to block object3d container 
+  // Every new subblock adds to block object3d container
   this.changeBlockSize = function (direction) {
     // console.log(this.currentBlock)
 
@@ -212,12 +213,12 @@ function Game() {
 
   this.clearScene = function () {
     main.scene.children
-      .filter(e => {
-        return e.name.split("_")[0] === "block"
-      })
-      .map(e => {
-        main.scene.remove(e);
-      })
+        .filter(e => {
+          return e.name.split("_")[0] === "block"
+        })
+        .map(e => {
+          main.scene.remove(e);
+        })
   }
 
   this.loadProject = function (buildings) {
@@ -241,7 +242,7 @@ function Game() {
 
           var klocek = (new Klocek()).getKlocek();
           container.add(klocek)
-          if(value.rotation){
+          if (value.rotation) {
             klocek.position.set((_x) * 50, 0, (_z) * 50)
           } else {
             klocek.position.set((_x + x) * 50, y * 30, (_z + z) * 50)
@@ -256,16 +257,12 @@ function Game() {
       this.currentBlock.userData.rotation = 0;
 
       main.scene.add(container)
-      if(value.rotation){
+      if (value.rotation) {
         container.rotation.y = value.rotation;
         container.position.set(x * 50, y * 30, z * 50)
       }
-      if(value.color){
-        console.log(value.color)
-        console.log(container)
-        for(let child of container.children){
-          console.log(child)
-
+      if (value.color) {
+        for (let child of container.children) {
           child.children[0].material.color.setHex(value.color);
         }
         // container.material.color = value.color;

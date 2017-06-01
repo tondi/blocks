@@ -9,7 +9,8 @@ let UI = {
     userInfoContainer: document.querySelector(".user-info-container"),
     buildingsContainer: document.querySelector(".buildings-container"),
     buildingsList: document.querySelector(".buildings__list"),
-    buildingsHeader: document.querySelector(".buildings__header"),
+    buildingsHeader: document.querySelector(".buildings__header__content"),
+    buildingsHeaderContainer: document.querySelector(".buildings__header"),
 
   },
 
@@ -20,6 +21,12 @@ let UI = {
     // remove prev in case user logged out and in immediately
     // for development
     UI.nodes.buildingsList.innerHTML = "";
+
+    // remove arrow if was added prevroiusly
+    let arrow = document.querySelector(".buildings__header__go-back");
+    if (arrow !== null) {
+      arrow.remove();
+    }
 
     // Dynamicaly create new user element
     // Funciton used to gain clarification
@@ -81,6 +88,35 @@ let UI = {
 
     UI.nodes.buildingsHeader.innerHTML = "Projects";
 
+    // Remove arrow if added previously
+    // Most straight method, iterating over parent to find child with class is bad
+    let arrow = document.querySelector(".buildings__header__go-back");
+    if (arrow !== null) {
+      arrow.remove();
+    }
+
+    if (game.userName == "admin") {
+      let goBack = document.createElement("div");
+      goBack.classList.add("buildings__header__go-back");
+
+      let i = document.createElement("i");
+      i.classList.add("fa");
+      i.classList.add("fa-arrow-left");
+
+      goBack.appendChild(i)
+      UI.nodes.buildingsHeaderContainer.appendChild(goBack);
+
+      goBack.addEventListener("click", () => {
+
+        // TODO users contain only current user projects. We need all users
+        let users = {}
+        for (let value of data) {
+          users[value.login] = users[value.login] || [];
+          users[value.login].push(value)
+        }
+        UI.showUsers(users);
+      })
+    }
     // if previously viewed
     if (UI.nodes.buildingsList.innerHTML) {
       UI.nodes.buildingsList.innerHTML = "";
@@ -125,6 +161,7 @@ let UI = {
         game.loadProject(projectData.buildings)
       })
     }
+
     if (data.length) {
       for (let value of data) {
         // console.log("date:", value.date)
@@ -185,14 +222,14 @@ let UI = {
 }
 
 UI.nodes.login.addEventListener("keydown", (e) => {
-  if(e.keyCode == 13){
+  if (e.keyCode == 13) {
     let data = UI.getUserCredientals();
     network.login(data);
   }
 })
 
 UI.nodes.password.addEventListener("keydown", (e) => {
-  if(e.keyCode == 13){
+  if (e.keyCode == 13) {
     let data = UI.getUserCredientals();
     network.login(data);
   }

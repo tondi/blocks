@@ -1,10 +1,10 @@
-module.exports = function() {
+module.exports = function () {
 
   var opers = {
 
     // wstawienie jednego "rekordu" do dokumentu - INSERT
 
-    AddUser: function(Model, data, cb) {
+    AddUser: function (Model, data, cb) {
       // TODO: Size of collections
       // Model.collection.stats(function(err, results) {
       //   console.log(results.storageSize);
@@ -15,13 +15,12 @@ module.exports = function() {
       opers.ValidateUser(Model, data.name, any).catch((resp) => {
         console.log("resp:", resp)
 
-
-        data.save(function(error, data, dodanych) {
+        data.save(function (error, data, dodanych) {
           console.log("added " + data)
           if (error) {
             let response = {
               success: false,
-              text: "Błąd rejestracji użytkownika"
+              text: "Błąd rejestracji użytkownika",
             }
             cb(response);
             return console.error(error);
@@ -29,25 +28,24 @@ module.exports = function() {
           }
           let response = {
             success: true,
-            text: "Zarejestrowano"
+            text: "Zarejestrowano",
           }
           cb(response)
 
         })
       }).then((data) => {
 
-        cb({ success: false, text: "User already exists" })
+        cb({success: false, text: "User already exists"})
         console.log("user already exists")
       })
-
 
     },
 
     //pobranie z ograniczeniem ilości i warunkiem - WHERE, LIMIT
 
-    ValidateUser: function(Model, name, password) {
+    ValidateUser: function (Model, name, password) {
       return new Promise((resolve, reject) => {
-        Model.find({ name: name, password: password }, function(err, data) {
+        Model.find({name: name, password: password}, function (err, data) {
           if (err) {
             reject(err);
           }
@@ -56,14 +54,14 @@ module.exports = function() {
             let response = {
               success: true,
               text: "Successfuly logged in",
-              name: name
+              name: name,
             }
             resolve(response);
           } else {
             let response = {
               success: false,
               text: "User does not exist or password invalid",
-              name: name
+              name: name,
             }
             reject(response)
           }
@@ -75,22 +73,21 @@ module.exports = function() {
     // pobranie wszystkich "rekordów" z dokumentu - SELECT
     // zwracamy uwagę na argument Model
 
-    SaveProject: function(data) {
+    SaveProject: function (data) {
       return new Promise((resolve, reject) => {
-        data.save(function(error, data, dodanych) {
+        data.save(function (error, data, dodanych) {
           console.log("added " + data)
-            // console.log(error)
           if (error) {
             let response = {
               success: false,
-              text: "Błąd dodawania projektu"
+              text: "Błąd dodawania projektu",
             }
             reject(response);
             // return console.error(error);
           }
           let response = {
             success: true,
-            text: "Zapisano projekt"
+            text: "Zapisano projekt",
           }
           resolve(response)
 
@@ -99,9 +96,9 @@ module.exports = function() {
 
     },
 
-    SelectUserProjects: function(Model, name) {
+    SelectUserProjects: function (Model, name) {
       return new Promise((resolve, reject) => {
-        Model.find({ login: name }, function(err, data) {
+        Model.find({login: name}, function (err, data) {
           if (err) {
             reject(err);
           }
@@ -110,13 +107,13 @@ module.exports = function() {
             let response = {
               success: true,
               text: "User projects found",
-              data: data
+              data: data,
             }
             resolve(response);
           } else {
             let response = {
               success: false,
-              text: "User does not have projects"
+              text: "User does not have projects",
             }
             reject(response)
           }
@@ -125,12 +122,39 @@ module.exports = function() {
       })
     },
 
-
-    SelectAll: function(Model, callback) {
+    SelectAll: function (Model, callback) {
       Model.find({}, function test(err, data) {
         if (err) return console.error(err);
         // console.log(data);
         callback(data)
+      })
+    },
+
+    SelectAllUsers: function (Model) {
+      return new Promise((resolve, reject) => {
+        Model.find({}, function (err, data) {
+          if (err) {
+            reject(err);
+          }
+          // console.log("all users: ", data);
+          if (data.length) {
+            let response = {
+              success: true,
+              text: "Found all users",
+              users: data,
+              // name: name,
+            }
+            resolve(response);
+          } else {
+            let response = {
+              success: false,
+              text: "User does not exist or password invalid",
+              // name: name,
+            }
+            reject(response)
+          }
+
+        });
       })
     },
 
@@ -146,8 +170,8 @@ module.exports = function() {
 
     //aktualizacja - np zamiana imienia - UPDATE
 
-    UpdateImie: function(Model, oldName, newName) {
-      Model.update({ imie: oldName }, { imie: newName }, function(err, data) {
+    UpdateImie: function (Model, oldName, newName) {
+      Model.update({imie: oldName}, {imie: newName}, function (err, data) {
         if (err) return console.error(err);
         console.log(data);
       })
@@ -155,19 +179,19 @@ module.exports = function() {
 
     //usuniecie danych - DELETE
 
-    DeleteAll: function(Model) {
-      Model.remove(function(err, data) {
+    DeleteAll: function (Model) {
+      Model.remove(function (err, data) {
         if (err) return console.error(err);
         // console.log(data);
       })
     },
 
-    DeleteOne: function(Model, user, callback) {
+    DeleteOne: function (Model, user, callback) {
       //   opers.SelectByImie(Model, user, 1, data => {
       //     console.log(data)
       //   })
       console.log("user to be removed: ", user)
-      Model.remove({ name: user }, function(err, data) {
+      Model.remove({name: user}, function (err, data) {
         // console.log(result)
         // ew info o usunieciu
         if (err) return console.error(err);
@@ -177,10 +201,7 @@ module.exports = function() {
 
       //   Model.remove({ name: user }, { justOne: true })
 
-    }
-
-    // pozostałe niezbędne operacje trzeba sobie dopisać samemu, 
-    // na podstawie dokumentacji Mongoose
+    },
   }
 
   return opers;

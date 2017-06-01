@@ -7,20 +7,19 @@ function Network() {
 
     let project = {
       buildings: [],
-      date: (new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString()
+      date: (new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString(),
     }
 
     let buildings = main.scene.children.filter(e => {
       return e.name.split("_")[0] == "block"
     })
 
-
     for (let value of buildings) {
       let data = {
         name: value.name,
         rotation: value.userData.rotation,
         color: value.userData.color,
-        children: []
+        children: [],
       }
 
       for (let child of value.children) {
@@ -30,9 +29,7 @@ function Network() {
       project.buildings.push(data)
     }
 
-
     console.log(project)
-
 
     socket.emit("project/save", project)
 
@@ -65,7 +62,7 @@ function Network() {
       z: block.position.z,
       // temporarily
       color: block.children[0].material.color,
-      num: 1
+      num: 1,
     }
     game.buildings.push(blockInfo)
     // console.log(game.buildings)
@@ -158,7 +155,6 @@ function Network() {
   //     socket.emit("data/scene-children", { data: sceneData })
   // }
 
-
   this.register = function (data) {
     socket.emit("user/register", data)
   }
@@ -190,7 +186,7 @@ function Network() {
   })
 
   // for development
-  // this.login({name: "admin", password: "admin"})
+  this.login({name: "admin", password: "admin"})
 
   socket.on("user/login", data => {
     UI.showInfo(data.text)
@@ -198,6 +194,7 @@ function Network() {
     if (data.success == true) {
       game.clearScene();
       UI.nodes.loggedAs.innerHTML = data.name;
+      game.userName = data.name;
       game.buildingAllowed = true;
       UI.nodes.loginContainer.classList.remove("visible")
       UI.nodes.loginContainer.classList.add("hidden")

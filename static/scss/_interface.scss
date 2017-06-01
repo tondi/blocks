@@ -1,128 +1,141 @@
 @font-face {
-	font-family: "FontAwesome";
-	src: url("../assets/FontAwesome.woff2");
+    font-family: "FontAwesome";
+    src: url("../assets/FontAwesome.woff2");
 }
 
 .interface-block {
-	position: absolute;
-	z-index: 2;
-	padding: 1% 2%;
-	background: #003953;
-	// border: 1px solid white;
-	border-radius: 3px;
-	color: white;
-	text-align: center;
+    position: absolute;
+    z-index: 2;
+    padding: 1% 2%;
+    background: #003953;
+    // border: 1px solid white;
+    border-radius: 3px;
+    color: white;
+    text-align: center;
 }
 
 .help-container {
-	@extend .interface-block;
-	bottom: 2%;
-	left: 50%;
-	transform: translateX(-50%);
-	// override background
-	background: transparent;
+    @extend .interface-block;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    // override background
+    background: transparent;
 }
 
 // TODO: Use fontAwesome arrows instead of text
 .help {
-	user-select: none;
-	width: 100%;
-	border: none;
+    user-select: none;
+    width: 100%;
+    border: none;
 }
 
 .user-info-container {
-	@extend .interface-block;
-	user-select: none;
-	top: 3%;
-	right: 2%;
-	min-width: 10%;
+    @extend .interface-block;
+    user-select: none;
+    top: 3%;
+    right: 2%;
+    min-width: 10%;
 }
 
 .button {
-	width: 100%;
-	margin-top: 0.8em;
-	padding: 2% 6% 2% 6%;
-	color: black;
-	font-family: Lato;
-	border: none;
-	background: #fff;
-	cursor: pointer;
-	// font-size: 1.5em;
-	-webkit-appearance: none; // Zeruje domyslny styl input type=button w Safari na iph
-	-webkit-border-radius: 0;
+    width: 100%;
+    margin-top: 0.8em;
+    padding: 2% 6% 2% 6%;
+    color: black;
+    font-family: Lato;
+    border: none;
+    background: #fff;
+    cursor: pointer;
+    // font-size: 1.5em;
+    -webkit-appearance: none; // Zeruje domyslny styl input type=button w Safari na iph
+    -webkit-border-radius: 0;
 }
 
 .user-info {
-	&__log-out {
-		@extend .button;
-		transition: transform 0.2s;
-		&:hover{
-			transform: scale(1.1);
-		}
-	}
+    &__log-out {
+        @extend .button;
+        transition: transform 0.2s;
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
 }
 
 .buildings-container {
-	@extend .interface-block;
-	left: 2%;
-	top: 3%;
-	min-width: 17%;
-	user-select: none;
-	padding: 0.5% 1em;
-	.buildings {
-		&__header {
-			font-size: 1.6em;
-			text-transform: uppercase;
-			margin: 0.5em 0;
-
-		}
-		&__list{
-			display: flex;
-			flex-direction: column;
-		}
-		&__user,
-		&__project {
-			margin: 0.5em 0.5em;
-			font-size: 1rem;
-			display: flex;
-			flex-direction: row;
-			cursor: pointer;
-			flex: 1 0 3em;
-			transition: transform 0.2s;
-			&__image {
-				flex: 1;
-				position: relative;
-				&::before {
-					position: absolute;
-					left: 50%;
-					top: 50%;
-					transform: translate(-50%, -50%);
-					font-size: 3em;
-				}
-			}
-			&__text {
-				transform: translateX(1em);
-				flex: 4;
-				display: flex;
-				flex-direction: column;
-				text-align: left;
-				justify-content: center;
-			}
-			&:hover{
-				transform: scale(1.1);
-			}
-		}
-		&__save{
-			//@extend .button;
-			margin: 0.5em 0.5em;
-			font-size: 1.1rem;
-			cursor: pointer;
-			flex: 1 0 3em;
-			font-family: Lato;
-			transition: transform 0.2s;
-			&:hover{
-				transform: scale(1.1);
-			}
-		}
-	}
+    @extend .interface-block;
+    left: 2%;
+    top: 3%;
+    min-width: 17%;
+    user-select: none;
+    padding: 0.5% 1em;
+    .buildings {
+        &__header {
+            font-size: 1.6em;
+            text-transform: uppercase;
+            margin: 0.5em 0;
+            display: flex;
+            &__go-back {
+                position: absolute;
+                left: 12%;
+                cursor: pointer;
+                transform: scale(1);
+                transition: transform 0.1s ease-out;
+                &:hover {
+                    transform: scale(1.3);
+                }
+            }
+            &__content {
+                margin: auto;
+            }
+        }
+        &__list {
+            display: flex;
+            flex-direction: column;
+        }
+        &__user,
+        &__project {
+            margin: 0.5em 0.5em;
+            font-size: 1rem;
+            display: flex;
+            flex-direction: row;
+            cursor: pointer;
+            flex: 1 0 3em;
+            transition: transform 0.2s;
+            &__image {
+                flex: 1;
+                position: relative;
+                &::before {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    font-size: 3em;
+                }
+            }
+            &__text {
+                transform: translateX(1em);
+                flex: 4;
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+                justify-content: center;
+            }
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+        &__save {
+            //@extend .button;
+            margin: 0.5em 0.5em;
+            font-size: 1.1rem;
+            cursor: pointer;
+            flex: 1 0 3em;
+            font-family: Lato;
+            transition: transform 0.2s;
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
 }
