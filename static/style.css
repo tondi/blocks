@@ -130,7 +130,11 @@ body {
   transform: translateX(-50%);
   top: 10%;
   z-index: 4;
-  text-align: center; }
+  text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
   .info-container .info {
     font-size: 2em;
     color: white;
