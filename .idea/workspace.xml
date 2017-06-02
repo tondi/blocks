@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4fbea2e0-d338-4ca2-98f6-a31ea3feb166" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.editorconfig" afterPath="$PROJECT_DIR$/.editorconfig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/Operations.js" afterPath="$PROJECT_DIR$/database/Operations.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/index.html" afterPath="$PROJECT_DIR$/static/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/Game.js" afterPath="$PROJECT_DIR$/static/js/Game.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/Main.js" afterPath="$PROJECT_DIR$/static/js/Main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/Network.js" afterPath="$PROJECT_DIR$/static/js/Network.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/non-class/UI.js" afterPath="$PROJECT_DIR$/static/js/non-class/UI.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/non-class/window-listener.js" afterPath="$PROJECT_DIR$/static/js/non-class/window-listener.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/scss/_interface.scss" afterPath="$PROJECT_DIR$/static/scss/_interface.scss" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/style.css" afterPath="$PROJECT_DIR$/static/style.css" />
     </list>
@@ -63,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_interface.scss" pinned="false" current-in-tab="false">
+      <file leaf-file-name="_interface.scss" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/scss/_interface.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="507">
-              <caret line="83" column="25" lean-forward="true" selection-start-line="83" selection-start-column="25" selection-end-line="83" selection-end-column="25" />
+            <state relative-caret-position="239">
+              <caret line="69" column="22" lean-forward="true" selection-start-line="69" selection-start-column="22" selection-end-line="69" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -96,21 +91,9 @@
       <file leaf-file-name="Main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/js/Main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2808">
-              <caret line="156" column="5" lean-forward="false" selection-start-line="156" selection-start-column="5" selection-end-line="156" selection-end-column="5" />
+            <state relative-caret-position="371">
+              <caret line="167" column="51" lean-forward="false" selection-start-line="167" selection-start-column="51" selection-end-line="167" selection-end-column="51" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_base.scss" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/scss/_base.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-              <folding>
-                <marker date="1496265836497" expanded="true" signature="5:7" ph="{...}" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -118,18 +101,28 @@
       <file leaf-file-name="Network.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/js/Network.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="472">
-              <caret line="197" column="34" lean-forward="false" selection-start-line="197" selection-start-column="34" selection-end-line="197" selection-end-column="34" />
+            <state relative-caret-position="292">
+              <caret line="188" column="52" lean-forward="false" selection-start-line="188" selection-start-column="52" selection-end-line="188" selection-end-column="52" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UI.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UI.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/js/non-class/UI.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="616">
-              <caret line="111" column="22" lean-forward="true" selection-start-line="111" selection-start-column="22" selection-end-line="111" selection-end-column="22" />
+            <state relative-caret-position="371">
+              <caret line="104" column="0" lean-forward="true" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="window-listener.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/js/non-class/window-listener.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="116">
+              <caret line="4" column="9" lean-forward="false" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -139,22 +132,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>\n</find>
-      <find>userna</find>
-      <find>usernam</find>
-      <find>username</find>
-      <find>logged</find>
-      <find>logged-as</find>
-      <find>l</find>
-      <find>loggedA</find>
-      <find>loggedAs</find>
-      <find>setTime</find>
-      <find>curren</find>
-      <find>projects</find>
-      <find>users</find>
-      <find>users</find>
-      <find>users =</find>
-      <find>users = {}</find>
       <find>user = {}</find>
       <find>user = {</find>
       <find>user =</find>
@@ -167,8 +144,24 @@
       <find>on(&quot;)</find>
       <find>on(&quot;&quot;)</find>
       <find>on(&quot;use&quot;)</find>
-      <find>on(&quot;user&quot;)</find>
       <find>Nice</find>
+      <find>on(&quot;user&quot;)</find>
+      <find>res</find>
+      <find>resize</find>
+      <find>w</find>
+      <find>window.</find>
+      <find>window.add</find>
+      <find>e</find>
+      <find>netwo</find>
+      <find>n</find>
+      <find>se</find>
+      <find>setTIme</find>
+      <find>m</find>
+      <find>main</find>
+      <find>setTi</find>
+      <find>header</find>
+      <find>inter</find>
+      <find>arrow</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -179,15 +172,16 @@
       <list>
         <option value="$PROJECT_DIR$/static/scss/_base.scss" />
         <option value="$PROJECT_DIR$/.jscs.json" />
-        <option value="$PROJECT_DIR$/static/js/Main.js" />
         <option value="$PROJECT_DIR$/airbnb.json" />
         <option value="$PROJECT_DIR$/database/Operations.js" />
         <option value="$PROJECT_DIR$/server.js" />
-        <option value="$PROJECT_DIR$/static/scss/_interface.scss" />
         <option value="$PROJECT_DIR$/static/js/Game.js" />
-        <option value="$PROJECT_DIR$/static/js/Network.js" />
         <option value="$PROJECT_DIR$/static/index.html" />
+        <option value="$PROJECT_DIR$/static/js/Network.js" />
+        <option value="$PROJECT_DIR$/static/js/non-class/window-listener.js" />
+        <option value="$PROJECT_DIR$/static/js/Main.js" />
         <option value="$PROJECT_DIR$/static/js/non-class/UI.js" />
+        <option value="$PROJECT_DIR$/static/scss/_interface.scss" />
       </list>
     </option>
   </component>
@@ -483,12 +477,12 @@
       <workItem from="1496318989955" duration="1834000" />
       <workItem from="1496338525949" duration="74000" />
       <workItem from="1496338619342" duration="120000" />
-      <workItem from="1496338766122" duration="13382000" />
+      <workItem from="1496338766122" duration="16712000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42778000" />
+    <option name="totallyTimeSpent" value="46108000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -861,13 +855,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/non-class/window-listener.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/scss/_login.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -894,14 +881,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/libs/three.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="32892" column="24" lean-forward="false" selection-start-line="32892" selection-start-column="24" selection-end-line="32892" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/airbnb.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -918,34 +897,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/scss/_interface.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="507">
-          <caret line="83" column="25" lean-forward="true" selection-start-line="83" selection-start-column="25" selection-end-line="83" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/Main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2808">
-          <caret line="156" column="5" lean-forward="false" selection-start-line="156" selection-start-column="5" selection-end-line="156" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/Game.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
           <caret line="9" column="21" lean-forward="false" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/Network.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="472">
-          <caret line="197" column="34" lean-forward="false" selection-start-line="197" selection-start-column="34" selection-end-line="197" selection-end-column="34" />
           <folding />
         </state>
       </provider>
@@ -966,10 +921,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/Network.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="188" column="52" lean-forward="false" selection-start-line="188" selection-start-column="52" selection-end-line="188" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/libs/three.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="5018" column="87" lean-forward="false" selection-start-line="5018" selection-start-column="75" selection-end-line="5018" selection-end-column="93" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/non-class/window-listener.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="4" column="9" lean-forward="false" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/Main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="167" column="51" lean-forward="false" selection-start-line="167" selection-start-column="51" selection-end-line="167" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/non-class/UI.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="111" column="22" lean-forward="true" selection-start-line="111" selection-start-column="22" selection-end-line="111" selection-end-column="22" />
+        <state relative-caret-position="371">
+          <caret line="104" column="0" lean-forward="true" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/scss/_interface.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="69" column="22" lean-forward="true" selection-start-line="69" selection-start-column="22" selection-end-line="69" selection-end-column="22" />
           <folding />
         </state>
       </provider>

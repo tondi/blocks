@@ -186,7 +186,7 @@ function Network() {
   })
 
   // for development
-  this.login({name: "admin", password: "admin"})
+  // this.login({name: "admin", password: "admin"});
 
   socket.on("user/login", data => {
     UI.showInfo(data.text)

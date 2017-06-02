@@ -72,7 +72,7 @@ let UI = {
         // showProjects gets array natively
         let arr = data[userName];
         // console.log("finish", arr)
-        UI.showProjects(arr)
+        UI.showProjects(arr, data)
         // console.log()
       })
     }
@@ -84,7 +84,7 @@ let UI = {
     }
 
   },
-  showProjects(data /* data is [] and contains projects*/) {
+  showProjects(data, completeData = null /* data is [] and contains projects*/) {
 
     UI.nodes.buildingsHeader.innerHTML = "Projects";
 
@@ -104,17 +104,11 @@ let UI = {
       i.classList.add("fa-arrow-left");
 
       goBack.appendChild(i)
-      UI.nodes.buildingsHeaderContainer.appendChild(goBack);
+      // UI.nodes.buildingsHeaderContainer.appendChild(goBack);
+      UI.nodes.buildingsHeaderContainer.insertBefore(goBack, UI.nodes.buildingsHeader);
 
       goBack.addEventListener("click", () => {
-
-        // TODO users contain only current user projects. We need all users
-        let users = {}
-        for (let value of data) {
-          users[value.login] = users[value.login] || [];
-          users[value.login].push(value)
-        }
-        UI.showUsers(users);
+        UI.showUsers(completeData);
       })
     }
     // if previously viewed

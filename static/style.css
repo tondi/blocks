@@ -205,8 +205,6 @@ body {
     display: -ms-flexbox;
     display: flex; }
     .buildings-container .buildings__header__go-back {
-      position: absolute;
-      left: 12%;
       cursor: pointer;
       transform: scale(1);
       transition: transform 0.1s ease-out; }

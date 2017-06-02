@@ -1,5 +1,5 @@
 window.addEventListener('resize', () => {
-  main.camera.aspect = window.innerWidth / window.innerHeight;
+  main.camera.aspect = document.documentElement.clientWidth / document.documentElement.clientHeight;
   main.camera.updateProjectionMatrix();
-  main.renderer.setSize(window.innerWidth, window.innerHeight);
+  main.renderer.setSize(document.documentElement.clientWidth, document.documentElement.clientHeight);
 }, false)
