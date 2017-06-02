@@ -14,7 +14,7 @@ let UI = {
 
   },
 
-  showUsers: function (data) {
+  showUsers: function(data) {
     console.log("Users:", data)
 
     UI.nodes.buildingsHeader.innerHTML = "Users";
@@ -61,7 +61,7 @@ let UI = {
       UI.nodes.buildingsList.appendChild(user)
 
       // links to user projects
-      user.addEventListener("click", function () {
+      user.addEventListener("click", function() {
         // console.log("preess", data)
 
         // passed user name
@@ -73,7 +73,7 @@ let UI = {
         let arr = data[userName];
         // console.log("finish", arr)
         UI.showProjects(arr, data)
-        // console.log()
+          // console.log()
       })
     }
 
@@ -84,7 +84,8 @@ let UI = {
     }
 
   },
-  showProjects(data, completeData = null /* data is [] and contains projects*/) {
+  showProjects(data, completeData = null) {
+    console.log("complete:", completeData)
 
     UI.nodes.buildingsHeader.innerHTML = "Projects";
 
@@ -104,10 +105,17 @@ let UI = {
       i.classList.add("fa-arrow-left");
 
       goBack.appendChild(i)
-      // UI.nodes.buildingsHeaderContainer.appendChild(goBack);
+        // UI.nodes.buildingsHeaderContainer.appendChild(goBack);
       UI.nodes.buildingsHeaderContainer.insertBefore(goBack, UI.nodes.buildingsHeader);
 
       goBack.addEventListener("click", () => {
+        if (completeData === null) {
+
+          network.getAllUsers().then(users => {
+            completeData = users;
+            UI.showUsers(completeData);
+          });
+        }
         UI.showUsers(completeData);
       })
     }
@@ -150,7 +158,7 @@ let UI = {
       UI.nodes.buildingsList.appendChild(project)
 
       // add to scene
-      project.addEventListener("click", function () {
+      project.addEventListener("click", function() {
         UI.showInfo("Loading..")
         game.loadProject(projectData.buildings)
       })
@@ -175,7 +183,7 @@ let UI = {
     })
   },
 
-  getUserCredientals: function () {
+  getUserCredientals: function() {
     let login = UI.nodes.login.value;
     let password = UI.nodes.password.value;
     let data = {
@@ -186,7 +194,7 @@ let UI = {
     return data;
   },
 
-  showInfo: function (text) {
+  showInfo: function(text) {
     UI.nodes.info.innerHTML = text;
     UI.nodes.info.classList.remove("hidden");
     UI.nodes.info.classList.add("visible");
@@ -199,7 +207,7 @@ let UI = {
     }, 1500)
   },
 
-  registerOperations: function () {
+  registerOperations: function() {
 
 
     let data = UI.getUserCredientals();

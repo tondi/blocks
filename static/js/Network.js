@@ -3,7 +3,7 @@ function Network() {
   // this.test = "x"
   var socket = io();
 
-  this.saveBuildings = function () {
+  this.saveBuildings = function() {
 
     let project = {
       buildings: [],
@@ -34,6 +34,20 @@ function Network() {
     socket.emit("project/save", project)
 
   }
+
+  this.getAllUsers = function() {
+    socket.emit("user/all", {})
+    return new Promise((resolve, reject) => {
+      socket.on("user/all", users => {
+        if (users) {
+          resolve(users);
+        } else {
+          reject(users);
+        }
+      })
+    })
+  }
+
   socket.on("project/save", data => {
     // game.addLegacyBlock(data)
     console.log(data)
@@ -54,23 +68,23 @@ function Network() {
   })
 
   // TODO: Here start adding to local var, then when save buildings called send them to server
-  this.addBlock = function (block) {
-    var blockInfo = {
-      rot: block.rotation,
-      x: block.position.x,
-      y: block.position.y,
-      z: block.position.z,
-      // temporarily
-      color: block.children[0].material.color,
-      num: 1,
+  this.addBlock = function(block) {
+      var blockInfo = {
+        rot: block.rotation,
+        x: block.position.x,
+        y: block.position.y,
+        z: block.position.z,
+        // temporarily
+        color: block.children[0].material.color,
+        num: 1,
+      }
+      game.buildings.push(blockInfo)
+        // console.log(game.buildings)
+        // console.log(main.scene.children)
+        // send to server
+      socket.emit("block/add", blockInfo)
     }
-    game.buildings.push(blockInfo)
-    // console.log(game.buildings)
-    // console.log(main.scene.children)
-    // send to server
-    socket.emit("block/add", blockInfo)
-  }
-  // socket.broadcast.to('game').emit('message', 'nice game');
+    // socket.broadcast.to('game').emit('message', 'nice game');
 
   socket.on("block/add", data => {
     game.addLegacyBlock(data)
@@ -123,7 +137,7 @@ function Network() {
 
 
   //  ------- rozmiar
-  this.changeBlockSize = function (direction) {
+  this.changeBlockSize = function(direction) {
     socket.emit("block/change-size", direction)
   }
   socket.on("block/change-size", data => {
@@ -131,7 +145,7 @@ function Network() {
   })
 
   // ------- color
-  this.changeBlockColor = function (color) {
+  this.changeBlockColor = function(color) {
     socket.emit("block/change-color", color)
   }
   socket.on("block/change-color", data => {
@@ -139,7 +153,7 @@ function Network() {
   })
 
   // ------- rotation
-  this.changeBlockRotation = function (rotation) {
+  this.changeBlockRotation = function(rotation) {
     socket.emit("block/change-rotation", rotation)
   }
   socket.on("block/change-rotation", data => {
@@ -155,7 +169,7 @@ function Network() {
   //     socket.emit("data/scene-children", { data: sceneData })
   // }
 
-  this.register = function (data) {
+  this.register = function(data) {
     socket.emit("user/register", data)
   }
   socket.on("user/register", data => {
@@ -163,11 +177,11 @@ function Network() {
     console.log(data)
   })
 
-  this.login = function (data) {
+  this.login = function(data) {
     socket.emit("user/login", data)
   }
 
-  this.logOut = function () {
+  this.logOut = function() {
     socket.emit("user/logout", {})
   }
 

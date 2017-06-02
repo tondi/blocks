@@ -25,19 +25,19 @@ function connectToMongo() {
 
   //przy wystąpieniu błędu
 
-  db.on("error", function () {
+  db.on("error", function() {
     console.log("problem z mongo")
   });
 
   //przy poprawnym połączeniu z bazą
 
-  db.once("open", function () {
+  db.once("open", function() {
     console.log("mongo jest podłączone - można wykonywać operacje na bazie");
   });
 
   //przy rozłączeniu z bazą
 
-  db.once("close", function () {
+  db.once("close", function() {
     console.log("mongodb zostało odłączone");
   });
 }
@@ -56,7 +56,7 @@ function createAdmin() {
     password: "admin"
   });
 
-  opers.AddUser(Models.User, admin, function (text) {
+  opers.AddUser(Models.User, admin, function(text) {
     // Then we send it back to client
     //   io.sockets.to(socket.id).emit("user/register", {
     //     status: text
@@ -65,7 +65,7 @@ function createAdmin() {
 }
 createAdmin();
 
-io.on('connection', function (socket) {
+io.on('connection', function(socket) {
   console.log('a user connected');
   // console.log("CURRENT ID connection: ", socket.id)
 
@@ -80,11 +80,11 @@ io.on('connection', function (socket) {
       password: data.password
     });
 
-    user.validate(function (err) {
+    user.validate(function(err) {
       console.log("err:", err);
     });
 
-    opers.AddUser(Models.User, user, function (data) {
+    opers.AddUser(Models.User, user, function(data) {
       // Then we send it back to client
       io.sockets.to(socket.id).emit("user/register", data);
     });
@@ -104,72 +104,72 @@ io.on('connection', function (socket) {
       }
     }
     console.log("user is already logged:", userAlreadyLogged)
-    if (!userAlreadyLogged /*!loggedUsers.includes(userData.name)*/) {
+    if (!userAlreadyLogged /*!loggedUsers.includes(userData.name)*/ ) {
       opers.ValidateUser(Models.User, userData.name, userData.password)
-          .then(data => {
-            console.log(data)
+        .then(data => {
+          console.log(data)
 
-            // Set the user that builds
-            currentUser = userData.name;
-            let loggedUser = {
-              name: userData.name,
-              id: socket.id
-            }
-            loggedUsers.push(loggedUser)
+          // Set the user that builds
+          currentUser = userData.name;
+          let loggedUser = {
+            name: userData.name,
+            id: socket.id
+          }
+          loggedUsers.push(loggedUser)
 
-            // Send login inf
-            io.sockets.to(socket.id).emit("user/login", data);
+          // Send login inf
+          io.sockets.to(socket.id).emit("user/login", data);
 
-            console.log("obecnie zalogowani uzytwkonicy: ", loggedUsers)
+          console.log("obecnie zalogowani uzytwkonicy: ", loggedUsers)
 
-            if (loggedUser.name == "admin") {
-              let any = new RegExp(".");
-              opers.SelectUserProjects(Models.Project, any)
-                  .then((response) => {
-                    // FOR DEV
-                    io.sockets.to(socket.id).emit("user/projects", response.data);
+          if (loggedUser.name == "admin") {
+            let any = new RegExp(".");
+            opers.SelectUserProjects(Models.Project, any)
+              .then((response) => {
+                // FOR DEV
+                io.sockets.to(socket.id).emit("user/projects", response.data);
 
-                    // Nice!
-                    let users = {}
-                    for (let value of response.data) {
-                      users[value.login] = users[value.login] || [];
-                      users[value.login].push(value)
+                // Nice!
+                let users = {}
+                for (let value of response.data) {
+                  users[value.login] = users[value.login] || [];
+                  users[value.login].push(value)
+                }
+
+                opers.SelectAllUsers(Models.User).then((data) => {
+                  // HOTFIX If user has no project he wouldnt be selected
+                  for (let value of data.users) {
+                    if (!users.hasOwnProperty(value.name)) {
+                      users[value.name] = [];
                     }
 
-                    opers.SelectAllUsers(Models.User).then((data) => {
-                      // HOTFIX If user has no project he wouldnt be selected
-                      for (let value of data.users) {
-                        if (!users.hasOwnProperty(value.name)) {
-                          users[value.name] = [];
-                        }
-
-                      }
-                      io.sockets.to(socket.id).emit("user/users", users);
-                    })
+                  }
+                  io.sockets.to(socket.id).emit("user/users", users);
+                })
 
 
-                  }).catch(response => {
+              }).catch(response => {
                 console.log("ADMIN: Nie udalo sie znalezc projektow", response)
                 io.sockets.to(socket.id).emit("user/projects", response);
               })
-            } else {
-              // send users buildings
-              opers.SelectUserProjects(Models.Project, currentUser)
-                  .then((response) => {
-                    console.log("udalo sie znalzezc projekty. RESPONSE:", response)
-                    io.sockets.to(socket.id).emit("user/projects", response.data);
+          } else {
+            // send users buildings
+            opers.SelectUserProjects(Models.Project, currentUser)
+              .then((response) => {
+                console.log("udalo sie znalzezc projekty. RESPONSE:", response)
+                io.sockets.to(socket.id).emit("user/projects", response.data);
 
-                  }).catch(response => {
+              }).catch(response => {
                 console.log("Nie udalo sie znalezc projektow", response)
                 io.sockets.to(socket.id).emit("user/projects", response);
 
               })
 
-            }
-          }).catch(data => {
-        console.log(data)
-        io.sockets.to(socket.id).emit("user/login", data);
-      })
+          }
+        }).catch(data => {
+          console.log(data)
+          io.sockets.to(socket.id).emit("user/login", data);
+        })
 
     } else {
       let data = {
@@ -179,6 +179,34 @@ io.on('connection', function (socket) {
       io.sockets.to(socket.id).emit("user/login", data);
     }
 
+  })
+
+  socket.on("user/all", () => {
+    let any = new RegExp(".");
+    opers.SelectUserProjects(Models.Project, any)
+      .then((response) => {
+
+        // Nice!
+        let users = {}
+        for (let value of response.data) {
+          users[value.login] = users[value.login] || [];
+          users[value.login].push(value)
+        }
+
+        opers.SelectAllUsers(Models.User).then((data) => {
+          // HOTFIX If user has no project he wouldnt be selected
+          for (let value of data.users) {
+            if (!users.hasOwnProperty(value.name)) {
+              users[value.name] = [];
+            }
+
+          }
+          io.sockets.to(socket.id).emit("user/all", users);
+        })
+      }).catch(response => {
+        console.log("user/all: Nie udalo sie znaleźć userów", response)
+        io.sockets.to(socket.id).emit("user/all", {});
+      })
   })
 
   socket.on("user/logout", data => {
@@ -203,7 +231,7 @@ io.on('connection', function (socket) {
       io.sockets.to(socket.id).emit("user/logout", data);
     }
     console.log("obecnie zalogowani uzytwkonicy: ", loggedUsers)
-    // socket.broadcast.emit("block/add", data)
+      // socket.broadcast.emit("block/add", data)
   })
 
 
@@ -232,7 +260,7 @@ io.on('connection', function (socket) {
   socket.on("project/save", data => {
     console.log("save : ", data)
     console.log("user : ", currentUser)
-    // save in db
+      // save in db
 
     let project = new Models.Project({
       login: currentUser,
@@ -248,7 +276,7 @@ io.on('connection', function (socket) {
       }
     }
 
-    project.validate(function (err) {
+    project.validate(function(err) {
       console.log("err:", err);
     });
 
@@ -259,15 +287,16 @@ io.on('connection', function (socket) {
       // Reload projects
       // TODO Handle admin adding project
       opers.SelectUserProjects(Models.Project, currentUser)
-          .then((response) => {
-            console.log("udalo sie znalzezc projekty. RESPONSE:", response)
-            io.sockets.to(socket.id).emit("user/projects", response.data);
+        .then((response) => {
+          console.log("udalo sie znalzezc projekty. RESPONSE:", response)
 
-          }).catch(response => {
-        console.log("Nie udalo sie znalezc projektow", response)
-        io.sockets.to(socket.id).emit("user/projects", response);
+          io.sockets.to(socket.id).emit("user/projects", response.data);
 
-      })
+        }).catch(response => {
+          console.log("Nie udalo sie znalezc projektow", response)
+          io.sockets.to(socket.id).emit("user/projects", response);
+
+        })
     }).catch((response) => {
       console.log("after saving fail:", response)
       io.sockets.to(socket.id).emit("project/save", response);
@@ -279,7 +308,7 @@ io.on('connection', function (socket) {
   })
 
 
-  socket.on("disconnect", function () {
+  socket.on("disconnect", function() {
     console.log("klient się rozłącza")
 
     console.log("CURRENT ID: ", socket.id)
