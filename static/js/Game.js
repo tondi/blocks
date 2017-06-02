@@ -44,7 +44,7 @@ function Game() {
   }
 
   initBoard()
-  //   console.log(main)
+    //   console.log(main)
 
 
   // DIFFRENT THAN ADD LEGACY
@@ -72,12 +72,12 @@ function Game() {
 
   }
 
-  this.changeBlockColor = function (color) {
+  this.changeBlockColor = function(color) {
     // console.log(this.currentBlock.children)
-    this.currentBlock.children.forEach(function (el) {
+    this.currentBlock.children.forEach(function(el) {
       //   console.log(el)
       if (el.children.length) {
-        el.children.forEach(function (inEl) {
+        el.children.forEach(function(inEl) {
           //   console.log("inel: ", inEl);
           inEl.material.color.setHex(color);
         })
@@ -94,7 +94,7 @@ function Game() {
   }
 
   // Every new subblock adds to block object3d container
-  this.changeBlockSize = function (direction) {
+  this.changeBlockSize = function(direction) {
     // console.log(this.currentBlock)
 
     if (direction == "x") {
@@ -107,7 +107,7 @@ function Game() {
         // additionalBlocks.push();
         additionalOne.position.set(this.currentBlock.userData.countAddedX * 50, 0, i * 50)
         this.currentBlock.add(additionalOne)
-        // console.log("adding block with y coordinats:", this.currentBlock.userData.countAddedY)
+          // console.log("adding block with y coordinats:", this.currentBlock.userData.countAddedY)
 
 
       }
@@ -124,7 +124,7 @@ function Game() {
         // additionalBlocks.push();
         additionalOne.position.set(i * 50, 0, this.currentBlock.userData.countAddedZ * 50)
         this.currentBlock.add(additionalOne)
-        // console.log("adding block with y coordinats:", this.currentBlock.userData.countAddedY)
+          // console.log("adding block with y coordinats:", this.currentBlock.userData.countAddedY)
 
       }
       //   additionalBlock.position.set(this.currentBlock.userData.countAddedX * 50, 0, 0)
@@ -135,7 +135,7 @@ function Game() {
     network.changeBlockSize(direction);
   }
 
-  this.changeBlockRotation = function (rad) {
+  this.changeBlockRotation = function(rad) {
     this.currentBlock.rotateY(rad)
     this.currentBlock.userData.rotation += rad;
     network.changeBlockRotation(rad)
@@ -143,25 +143,25 @@ function Game() {
 
   // TODO: Think about synthetyzing with addBlock
   // saves about 50 lines of code
-  this.addLegacyBlock = function (block) {
+  this.addLegacyBlock = function(block) {
 
     var klocek = (new Klocek()).getKlocek();
     main.scene.add(klocek)
     console.log(block)
     klocek.position.set(block.x, block.y, block.z)
-    // klocek.name = `block_${x}_${z}`
+      // klocek.name = `block_${x}_${z}`
 
     this.currentBlock = klocek;
     this.currentBlock.userData.countAddedX = 1;
     this.currentBlock.userData.countAddedZ = 1;
   }
 
-  this.changeLegacyBlockColor = function (color) {
+  this.changeLegacyBlockColor = function(color) {
     // console.log(this.currentBlock.children)
-    this.currentBlock.children.forEach(function (el) {
+    this.currentBlock.children.forEach(function(el) {
       //   console.log(el)
       if (el.children.length) {
-        el.children.forEach(function (inEl) {
+        el.children.forEach(function(inEl) {
           //   console.log("inel: ", inEl);
           inEl.material.color.setHex(color);
         })
@@ -173,7 +173,7 @@ function Game() {
     // socket
   }
 
-  this.changeLegacyBlockSize = function (direction) {
+  this.changeLegacyBlockSize = function(direction) {
     console.log(direction)
 
     if (direction == "x") {
@@ -181,7 +181,7 @@ function Game() {
         // var additionalBlocks = [];
 
         let additionalOne = (new Klocek).getKlocek()
-        // additionalBlocks.push();
+          // additionalBlocks.push();
         additionalOne.position.set(this.currentBlock.userData.countAddedX * 50, 0, i * 50)
         this.currentBlock.add(additionalOne)
 
@@ -194,7 +194,7 @@ function Game() {
         // var additionalBlocks = [];
 
         let additionalOne = (new Klocek).getKlocek()
-        // additionalBlocks.push();
+          // additionalBlocks.push();
         additionalOne.position.set(i * 50, 0, this.currentBlock.userData.countAddedZ * 50)
         this.currentBlock.add(additionalOne)
 
@@ -206,22 +206,22 @@ function Game() {
     // console.log(main.scene.children)
   }
 
-  this.changeLegacyBlockRotation = function (rad) {
+  this.changeLegacyBlockRotation = function(rad) {
     this.currentBlock.rotateY(rad)
 
   }
 
-  this.clearScene = function () {
+  this.clearScene = function() {
     main.scene.children
-        .filter(e => {
-          return e.name.split("_")[0] === "block"
-        })
-        .map(e => {
-          main.scene.remove(e);
-        })
+      .filter(e => {
+        return e.name.split("_")[0] === "block"
+      })
+      .map(e => {
+        main.scene.remove(e);
+      })
   }
 
-  this.loadProject = function (buildings) {
+  this.loadProject = function(buildings) {
     console.log("Loading ", buildings)
     this.clearScene();
 

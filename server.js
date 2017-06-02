@@ -2,8 +2,8 @@ var express = require('express')
 var app = express()
 var http = require('http').Server(app);
 var mongoose = require("mongoose");
-var server = app.listen(3000, () => {
-  console.log('Port 3000!')
+var server = app.listen(6010, () => {
+  console.log('Port 6010!')
 })
 var io = require('socket.io').listen(server);
 
