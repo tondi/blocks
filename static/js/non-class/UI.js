@@ -159,8 +159,9 @@ let UI = {
 
       // add to scene
       project.addEventListener("click", function() {
-        UI.showInfo("Loading..")
-        game.loadProject(projectData.buildings)
+        UI.showInfo("Loading..").then(() => {
+          game.loadProject(projectData.buildings)
+        })
       })
     }
 
@@ -195,16 +196,21 @@ let UI = {
   },
 
   showInfo: function(text) {
-    UI.nodes.info.innerHTML = text;
-    UI.nodes.info.classList.remove("hidden");
-    UI.nodes.info.classList.add("visible");
-    // UI.nodes.info.classList.toggle("hidden");
+    // Optional promise, used only in load project
+    return new Promise(resolve => {
+      UI.nodes.info.innerHTML = text;
+      UI.nodes.info.classList.remove("hidden");
+      UI.nodes.info.classList.add("visible");
+      // UI.nodes.info.classList.toggle("hidden");
+      setTimeout(() => {
+        UI.nodes.info.classList.remove("visible");
+        UI.nodes.info.classList.add("hidden");
 
-    setTimeout(() => {
-      UI.nodes.info.classList.remove("visible");
-      UI.nodes.info.classList.add("hidden");
+        resolve();
+      }, 1500)
 
-    }, 1500)
+    })
+
   },
 
   registerOperations: function() {
