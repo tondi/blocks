@@ -19,6 +19,7 @@ var opers = new Operations();
 var currentUser;
 var loggedUsers = [];
 
+
 function connectToMongo() {
 
   db = mongoose.connection;
